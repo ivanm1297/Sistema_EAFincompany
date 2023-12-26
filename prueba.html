@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .bar-container {
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .bar {
+            width: 40px; /* Ancho de cada barra */
+            margin: 0 5px;
+            background-color: #007bff; /* Color de las barras */
+            display: inline-block;
+        }
+
+        .diagonal-label-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .diagonal-label {
+            transform: rotate(-45deg);
+            transform-origin: bottom left;
+            white-space: nowrap;
+            margin-top: 5px;
+        }
+    </style>
+    <title>Gráfica con Etiquetas Diagonales</title>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Gráfica con Etiquetas Diagonales</h2>
+    <div class="bar-container">
+        <!-- Barra 1 -->
+        <div class="bar" style="height: 50px;"></div>
+
+        <!-- Barra 2 -->
+        <div class="bar" style="height: 120px;"></div>
+
+        <!-- Barra 3 -->
+        <div class="bar" style="height: 80px;"></div>
+
+        <!-- Agrega más barras según tus datos -->
+    </div>
+
+    <div class="diagonal-label-container">
+        <!-- Etiqueta 1 -->
+        <span class="diagonal-label">Etiqueta 1</span>
+
+        <!-- Etiqueta 2 -->
+        <span class="diagonal-label">Etiqueta 2</span>
+
+        <!-- Etiqueta 3 -->
+        <span class="diagonal-label">Etiqueta 3</span>
+
+        <!-- Agrega más etiquetas según tus datos -->
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!-- Modal para agregar auto -->
+<div class="modal" id="cotizacion_motoModal{{catalogo_moto.id_moto}}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Cotizacion de moto</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal Body - Formulario para agregar auto -->
+            <div class="modal-body">
+                <form action="/cotizacion_moto" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="modelo_coti_moto">Modelo:</label>
+                        <input type="text" class="form-control" id="modelo_coti_moto" name="modelo_coti_moto" value="{{catalogo_moto.modelo_moto}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="año_coti_moto" class="titulos">Año:</label>
+                        <select name="año_coti_moto" class="form-control" id="año_coti_moto">
+                            <option value="{{catalogo_moto.año_moto}}">{{catalogo_moto.año_moto}}</option>                            
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                        </select>
+                        <label for="nombre_comp" class="titulos">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre_comp" name="nombre_comp">
+                    </div>
+                    <div class="form-group">
+                        <label for="ap_coti_moto">Apellido paterno:</label>
+                        <input type="text" class="form-control" id="ap_coti_moto" name="ap_coti_moto">
+                    </div>
+                    <div class="form-group">
+                        <label for="am_coti_moto">Apellido Materno:</label>
+                        <input type="text" class="form-control" id="am_coti_moto" name="am_coti_moto">
+                    </div>
+                    <div class="form-group">
+                        <label for="celular_coti_moto">Telefono:</label>
+                        <input type="number" class="form-control" id="celular_coti_moto" name="celular_coti_moto">
+                    </div>
+                    <div class="form-group">
+                        <label for="correo_coti_moto">Correo Electronico:</label>
+                        <input type="email" class="form-control" id="correo_coti_moto" name="correo_coti_moto">
+                    </div>
+                    
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>

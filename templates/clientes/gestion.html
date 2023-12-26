@@ -1,0 +1,119 @@
+{%extends 'clientes/base.html'%}
+
+{%block contenido%}
+
+<div class="container">
+  <div class="row info_gestion_1">
+    <!-- Slogan, Imagen y Botón de Contacto -->
+    <div class="col-lg-6">
+      <div class="slogan-section">
+        <h2>Transforma tus sueños en realidad</h2>
+        <p class="eslogan_1">"¡ Si buscas la mejor gestoria para un credito, aqui estamos. !" Solicita el tuyo ahora
+          mismo</p>
+        <a href="https://web.whatsapp.com/send?phone=+52 1 729 257 5122&text=Hola,%20podria%20proporcionarme%20más%20informacion%20por%20favor%20!Gracias¡"
+          target="_blank" class="btn btn-outline-danger" style="margin-bottom: 13px;">Contáctanos</a>
+        <img src="/static/image/credito-bancario.jpg" class="img-fluid representacion mx-auto"
+          alt="Imagen Representativa">
+
+      </div>
+    </div>
+
+    <!-- Simulador de Cotización -->
+    <div class="col-lg-6 simulador_gestion mt-3">
+      <div class="cotizacion-section">
+        <h3 class="text-center">Simulador de Cotización</h3>
+        <form id="cotizacion-form">
+          <div class="form-group " style="width: 80%;">
+            <label for="cantidad" class="cantidad" style="font-size: 18px;">Cantidad a Cotizar:</label>
+            <input type="number" class="form-control text-center cantidad_1" id="cantidad" min="50000"
+              placeholder="Ingrese la cantidad">
+          </div>
+
+          <div class="form-group">
+            <label for="mensualidades" style="font-size: 18px;">Selecciona las Mensualidades:</label>
+            <div class="form-check">
+              <input type="radio" id="6" name="mensualidades" class="form-check-input" value="6">
+              <label for="6" class="form-check-label">6</label>
+              <input type="radio" id="12" name="mensualidades" class="form-check-input" value="12">
+              <label for="12" class="form-check-label">12</label>
+              <input type="radio" id="18" name="mensualidades" class="form-check-input" value="18">
+              <label for="18" class="form-check-label">18</label>
+              <input type="radio" id="48" name="mensualidades" class="form-check-input" value="48">
+              <label for="48" class="form-check-label">48</label>
+              <input type="radio" id="60" name="mensualidades" class="form-check-input" value="60">
+              <label for="60" class="form-check-label">60</label>
+            </div>
+            <div class="form-check">
+              <input type="radio" id="72" name="mensualidades" class="form-check-input" value="72">
+              <label for="72" class="form-check-label">72</label>
+              <input type="radio" id="84" name="mensualidades" class="form-check-input" value="84">
+              <label for="84" class="form-check-label">84</label>
+              <input type="radio" id="96" name="mensualidades" class="form-check-input" value="96">
+              <label for="96" class="form-check-label">96</label>
+              <input type="radio" id="108" name="mensualidades" class="form-check-input" value="108">
+              <label for="108" class="form-check-label">108</label>
+              <input type="radio" id="120" name="mensualidades" class="form-check-input" value="120">
+              <label for="120" class="form-check-label">120</label>
+            </div>
+
+          </div>
+
+          <div class="form-group " style="width: 80%;">
+            <label for="buro" style="font-size: 18px;">Buro de Crédito:</label>
+            <select class="form-control text-center  " id="buro">
+              <option value="bueno buro_1">Bueno</option>
+              <option value="regular">Regular</option>
+              <option value="malo">Malo</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn btn-outline-primary" onclick="calcularCotizacion()">Calcular</button>
+
+          <div id="resultado-cotizacion" class="">
+            <!-- Aquí se mostraría el resultado de la cotización -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Tabla de Requisitos y Beneficios-->
+<div class="container">
+  <table class="table_2">
+    <thead>
+      <tr>
+        <th scope="col titulo">Reqisitos</th>
+        <th scope="col titulo">Beneficios</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <li>Identificacion Oficial</li>
+          <li>Acta de Nacimiento</li>
+          <li>CURP/RFC</li>
+          <li>Comprobante de domicilios</li>
+          <li>Comprobantes de ingresos</li>
+          <li>Identificacion oficial de tres referencias
+            personales (amistad, familiar y laboral)</li>
+          <li>Un beneficiario (+18)</li>
+        </td>
+        <td>
+          <li>Sin penalización por pronto pago y/o
+            liquidación anticipada</li>
+          <li>Flexibilidad en buró de crédito</li>
+          <li>Tasa de interesés fija anual</li>
+          <li>Mensualidad congelada</li>
+          <li>Seguro por desempleo</li>
+          <li>Sin anualidades</li>
+          <li>Seguro de vida</li>
+        </td>
+
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+{%endblock%}

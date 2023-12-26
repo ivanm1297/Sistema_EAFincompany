@@ -1,0 +1,92 @@
+{% extends 'base_admin.html' %}
+
+{% block administrador %}
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    canvas {
+      border: 1px solid #ccc;
+    }
+  </style>  
+    <div class="container mx-5 my-3">
+        <label for="" class="titulo_grafica">
+            <p>Autos más Cotizados</p>
+        </label>
+
+        <div class="chart-container">
+            {% for modelo in modelos_cotizados %}
+                <div class="bar" style="height: '{{ modelo.total_cotizaciones * 20 }}px';">
+                    <div class="label">{{ modelo.modelo_coti_auto }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <canvas id="bar-chart" width="400" height="300"></canvas>
+<!-- <canvas id="line-chart" width="400" height="400"></canvas> -->
+<script>
+  var bar_ctx = document.getElementById('bar-chart').getContext('2d');
+
+  // Obtén los datos de tu backend y organízalos en un formato adecuado
+  var modelos_cotizados = [
+    { modelo_coti_auto: "Modelo1", total_cotizaciones: 5 },
+    { modelo_coti_auto: "Modelo2", total_cotizaciones: 19 },
+    // ... Agrega más datos según sea necesario
+  ];
+
+  var labels = modelos_cotizados.map(function(modelo) {
+    return modelo.modelo_coti_auto;
+  });
+
+  var data = modelos_cotizados.map(function(modelo) {
+    return modelo.total_cotizaciones;
+  });
+
+  var purple_orange_gradient = bar_ctx.createLinearGradient(0, 0, 0, 600);
+  purple_orange_gradient.addColorStop(0, 'orange');
+  purple_orange_gradient.addColorStop(1, 'purple');
+
+  var bar_chart = new Chart(bar_ctx, {
+      type: 'bar',
+      data: {
+          labels: labels,
+          datasets: [{
+              label: '# of Cotizaciones',
+              data: data,
+              backgroundColor: purple_orange_gradient,
+              hoverBackgroundColor: purple_orange_gradient,
+              hoverBorderWidth: 2,
+              hoverBorderColor: 'purple'
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });
+</script>
+
+<style>
+  canvas {
+    display: block;
+    max-width: 600px;
+    margin: 60px auto;
+  }
+</style>
+{% endblock %}

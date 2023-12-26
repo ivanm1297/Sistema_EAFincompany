@@ -1,0 +1,185 @@
+body{
+    margin: 0;
+    box-shadow:none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.custom-navbar {
+    background-color: #ffffff !important;
+    border: solid 0.4em rgb(255, 255, 255);
+    border-bottom-color: red;
+
+}
+
+.custom-navbar .navbar-nav .nav-link {
+    color: rgb(0, 0, 0) !important;
+    padding-right: 3.5em;
+}
+
+.custom-navbar .navbar-toggler-icon {
+    background-color: rgb(17, 16, 16) !important;
+}
+.logo{
+    width: 110px;
+}
+ /* Estilos para los indicadores en forma de círculos */
+ .carousel-indicators {
+    bottom: 0;
+}
+
+.carousel-indicators li {
+    background-color: #888;
+    border: none;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    
+}
+
+.carousel-indicators .active {
+    background-color: #333;
+}
+
+/* Estilo para la sección */
+.carousel-section {
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+}
+.image-carousel{
+    width: 300;
+    height: 500px;
+}
+.controladores{
+    width: 300px;
+}
+
+.mensaje p{
+    text-align: center;
+    font-size: 2em;
+    position: relative; /* Añade posición relativa al contenido de la sección */
+    z-index: 3; /* Coloca el texto por encima de la capa de opacidad */
+    font-weight: bold;
+    opacity: 0; /* Inicialmente, el mensaje es transparente */
+    transform: translateY(-50px); /* Mueve el mensaje hacia arriba 50px */
+    animation: caidaMensaje 2s ease forwards; 
+}
+.seccion_welcome {
+    background-image: url('/static/image/Logo2.webp');
+    background-repeat: no-repeat; /* Evita que la imagen de fondo se repita */
+    background-size: contain; /* Ajusta la imagen al tamaño de la sección sin recortarla */
+    background-position: center center; /* Centra la imagen vertical y horizontalmente */
+    min-height: calc(85vh - 110px); /* Calcula la altura mínima para la sección */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; /* Añade una posición relativa a la sección para que funcione z-index */
+}
+
+.seccion_welcome::before {
+    content: "";
+    background: rgba(255, 255, 255, 0.5); /* Opacidad blanca para superponer */
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1; /* Coloca la capa por delante de la imagen */
+}
+
+
+/*Efecto del Mensaje de Bienvenida al Administrador*/
+@keyframes caidaMensaje {
+    0% {
+        opacity: 0; /* Al principio, el mensaje es transparente */
+        transform: translateY(-50px); /* Al principio, el mensaje está arriba */
+    }
+    25% {
+        opacity: 1; /* En el primer rebote, el mensaje es completamente visible */
+        transform: translateY(0); /* En el primer rebote, el mensaje está en su posición original */
+    }
+    50% {
+        opacity: 1; /* En el punto medio, el mensaje sigue siendo visible */
+        transform: translateY(-30px); /* En el punto medio, el mensaje sube un poco */
+    }
+    75% {
+        opacity: 1; /* En el segundo rebote, el mensaje es completamente visible */
+        transform: translateY(0); /* En el segundo rebote, el mensaje está en su posición original */
+    }
+    100% {
+        opacity: 1; /* Al final, el mensaje es completamente visible */
+        transform: translateY(0); /* Al final, el mensaje está en su posición original */
+    }
+}
+
+.foto{
+    width: 50px;
+}
+#año_auto, #km_auto{
+    width: 35%;
+    display: inline;
+    justify-content: center;
+    margin: auto;
+}
+
+input[type=radio]{
+    display: none;
+}
+.radio label{
+    color: black;
+    padding: 5px 15px 5px 51px;
+    display: inline-block;
+    position: relative;
+    font-size: 1em;
+    border-radius: 3px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+.radio label:hover{
+    background: #888;
+}
+.radio label::before{
+    content: "";
+    width: 17px;
+    height: 17px;
+    display: inline-block;
+    background: none;
+    border: 3px solid #BD1522;
+    border-radius: 50%;
+    position: absolute;
+    left: 17px;
+    top: 8px;
+}
+input[type="radio"]:checked + label{
+    padding: 5px 15px;
+    background: #bd1523d5;
+    border-radius: 2px;
+    color: #ffffff;
+}
+input[type="radio"]:checked + label:before{
+    display: none;
+}
+#descripcion{
+    resize: none;
+    height: 100px;
+}
+.foto_2{
+  object-fit: contain;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+}
+.preview-image {
+    max-width: 100px;
+    max-height: 100px;
+    margin: 5px;
+    cursor: pointer;
+  }
+.imagen_cards{
+    width: 100px;
+}
+.admin_carrusel{
+  width: 150px;
+  height: 150px;
+}

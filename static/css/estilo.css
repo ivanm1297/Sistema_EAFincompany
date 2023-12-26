@@ -1,0 +1,449 @@
+body {
+    margin: 0;
+    box-shadow: none;
+    font-family: "Nunito";
+
+
+
+}
+
+@font-face {
+    font-family: Nunito;
+    src: url('/static/css/Nunito_Sans/static/NunitoSans_10pt-Regular.ttf');
+}
+
+.custom-navbar {
+    background-color: #ffffff !important;
+    border: solid 0.4em rgb(255, 255, 255);
+    border-bottom-color: rgb(214, 21, 21);
+    margin-bottom: 5em;
+
+}
+
+.custom-navbar .navbar-nav .nav-link {
+    color: rgb(0, 0, 0) !important;
+    padding-right: 3.5em;
+    font-size: 21px;
+}
+
+.custom-navbar .navbar-toggler-icon {
+    background-color: rgb(17, 16, 16) !important;
+}
+
+.logo {
+    width: 110px;
+}
+
+/* Estilos para el carrusel */
+
+.carrusel {
+    margin-top: 6.4em;
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+.carousel-indicators li {
+    background-color: #888;
+    border: none;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+}
+
+.carousel-indicators .active {
+    background-color: #333;
+}
+
+
+.indicadores:hover {
+    background-color: #888;
+}
+
+/* Establece una altura fija para las imágenes del carrusel */
+.img-fixed-height {
+    height: 500px;
+    /* Ajusta la altura según tus necesidades */
+    width: 100%;
+}
+
+.custom-card {
+    border: 2px solid #BE1E2E;
+    background-color: #EFEFEF;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.custom-card img {
+    max-width: 100px;
+    margin: 10px;
+}
+
+.custom-card .card-content {
+    padding: 10px;
+}
+
+.info_empresa {
+    background: #EFEFEF;
+    border: 3px solid #BE1E2E;
+    border-radius: 10px;
+}
+
+.descrip_empresa {
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+hr {
+    background: #BE1E2E;
+    background-color: #BE1E2E;
+    height: 3px;
+    border-radius: 10px;
+}
+
+.card-title {
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.btn-right {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #771717;
+}
+
+.card-body {
+    position: relative;
+    overflow: hidden;
+}
+
+table {
+    margin-top: 30px;
+    border: 2px solid #111;
+    width: 100%;
+}
+
+td,
+tr,
+th {
+    text-align: justify;
+    border: 2px solid #111;
+    padding: 10px;
+}
+
+tr {
+    text-align: center;
+}
+
+/*Simulador de Credito*/
+.eslogan_1 {
+    font-size: 24px;
+}
+
+.info_gestion_1 {
+    margin-top: 8em;
+}
+
+.representacion {
+    width: 450px;
+    border-radius: 10px;
+}
+
+.form-check {
+    display: inline-block;
+    margin-bottom: 10px;
+    text-align: center;
+    position: relative;
+}
+
+.form-check input {
+    display: none;
+}
+
+.form-check label {
+    cursor: pointer;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    /* Círculo */
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 18px;
+    background-color: #fff;
+    transition: background-color 0.3s;
+    color: #111;
+}
+
+.form-check input:checked+label {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.cotizacion-section {
+    padding: 35px;
+    color: #fff;
+    font-family: "Nunito";
+    box-shadow: 10px 10px 0 0 #41393ac5;
+    border-radius: 10px;
+    background-color: #eb1f33;
+    width: 95%;
+}
+
+.cantidad_1 {
+    margin-left: 50px;
+}
+
+footer {
+    margin-top: 1em;
+    background-color: #BE1E2E;
+    padding: 20px;
+    color: #EFEFEF;
+}
+
+footer .titulo_footer {
+    text-align: center;
+    font-family: "Nunito";
+    font-size: 22px;
+}
+
+footer a {
+    text-decoration: none;
+    color: #EFEFEF;
+    font-family: "Nunito";
+    font-size: 18px;
+}
+
+footer a:hover {
+    color: #EFEFEF;
+}
+
+.menu_2 {
+    text-decoration: none;
+}
+
+#buro {
+    margin-left: 50px;
+}
+
+.logos_marcas {
+    height: 80px;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+.logos_marcas:hover {
+    transform: scale(1.1);
+    transition: all 0.5s;
+}
+
+.titulo {
+    font-family: "Nunito";
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.texto {
+    font-size: 18px;
+    font-family: "Nunito";
+    text-align: justify;
+
+}
+
+.foto {
+    width: 100px;
+}
+
+.imagen_cards {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    min-height: 100%;
+    object-fit: fill;
+    margin: 12px;
+    border-radius: 10px;
+
+}
+
+.year-badge {
+    text-align: center;
+    width: 100px;
+    height: 36px;
+    font-family: "Nunito";
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    border: 2px solid rgb(214, 21, 21);
+    background-color: #ffffff;
+    color: #000000;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 20px;
+    z-index: 12;
+}
+
+.card_informacion {
+    width: 500px;
+    height: 400px;
+    margin: auto;
+}
+
+.thumbnail {
+    cursor: pointer;
+    width: 30px;
+    object-fit: cover;
+}
+
+.thumbnail.active {
+    border: 3px solid rgb(214, 21, 21);
+}
+
+.card_info {
+    border-radius: 10px;
+    border: 3px solid rgb(214, 21, 21);
+    background: #d3cfcf94;
+    max-width: 110%;
+
+}
+
+.card_info2 {
+    width: 80%;
+}
+
+.card_info_p {
+    text-align: center;
+    font-size: 20px;
+    font-family: "Nunito";
+}
+
+.titulo_carro {
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.titulos_card {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.img-fluid {
+
+    border-radius: 20px;
+}
+
+#mainImage img {
+    width: 100%;
+    height: 300px;
+    border-radius: 10px;
+}
+
+.descripcion {
+    border: 2px solid rgb(214, 21, 21);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: justify;
+    background: #d3cfcf94;
+    margin-top: 2em;
+    font-size: 17px;
+    overflow: visible;
+
+}
+
+.thumbnail {
+    border-radius: 10px;
+    width: 150px;
+    height: 100px;
+}
+
+#myCarousel1 .carousel-inner .carousel-item img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: 250px;
+    margin: 0 auto;
+    display: block;
+}
+
+.catalogo {
+    border: 3px solid #BE1E2E;
+    border-radius: 5px;
+    font-size: 17px;
+    color: #111;
+    text-decoration: none;
+    padding: 7px;
+    float: right;
+    margin-right: 20px;
+    font-size: 18px;
+}
+
+.catalogo:hover {
+    background: #BE1E2E;
+    color: #fff;
+}
+
+.txt_head {
+    color: #fff;
+}
+.icon-container {
+    display: inline-flex;
+    flex-direction: column; /* Alinea los elementos en una columna */
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+    background: #f3f3f3;
+    padding: 10px;
+    border-radius: 10px;
+    color: #0c0b0b;
+    margin-bottom: 5px;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 3px solid #771717;
+  }
+.icon-container:hover{
+    background: #771717;
+    color: #fff;
+}
+
+  .icon-container i {
+    margin-bottom: 5px; /* Ajusta el espacio entre el icono y el texto */
+  }
+
+  .carousel-img {
+    margin-top: 30px;
+    height: 200px; /* Set the desired height */
+    object-fit:scale-down; /* Maintain aspect ratio and cover the container */
+    width: 100%; /* Ensure the image takes the full width of the container */
+}
+.filtros {
+    background-color: red; /* Fondo rojo */
+    display: flex; /* Establecer el contenedor como flex */
+    justify-content: space-around; /* Distribuir los elementos de manera uniforme en el contenedor */
+    padding: 10px; /* Espaciado interior para mayor legibilidad */
+    border-radius: 10px;
+}
+
+
+label {
+    display: block; /* Para que los labels ocupen una línea completa */
+    margin-bottom: 5px; /* Espaciado inferior para mayor legibilidad */
+}
+
+select, option {
+    box-sizing: border-box; /* Incluir el padding y el borde en el ancho total */
+    font-size: 14px; /* Tamaño de fuente reducido */
+    height: 10px;
+}

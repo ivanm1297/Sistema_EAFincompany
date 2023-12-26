@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    #grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+
+    .thumbnail {
+      width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
+
+    #main-image {
+      width: 500px;
+      height: 500px;
+      border: 1px solid #ccc;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="grid-container">
+  <img class="thumbnail" src="https://example.com/star1.jpg" alt="Estrella 1" onclick="changeImage('https://example.com/star1.jpg')">
+  <img class="thumbnail" src="https://example.com/star2.jpg" alt="Estrella 2" onclick="changeImage('https://example.com/star2.jpg')">
+  <img class="thumbnail" src="https://example.com/star3.jpg" alt="Estrella 3" onclick="changeImage('https://example.com/star3.jpg')">
+  <!-- Puedes reemplazar estas URL con las de las imágenes que prefieras -->
+</div>
+
+<img id="main-image" src="https://example.com/star1.jpg" alt="Imagen principal">
+
+<script>
+  function changeImage(imageSource) {
+    document.getElementById('main-image').src = imageSource;
+  }
+</script>
+
+</body>
+</html>

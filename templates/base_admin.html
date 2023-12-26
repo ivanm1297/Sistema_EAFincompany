@@ -1,0 +1,324 @@
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración E&A Company</title>
+    <link rel="shortcut icon" href="/static/image/logo_meta.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/dashbord_admin.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+
+    <script src="/static/js/hyper-config.js"></script>
+
+    <!-- App css -->
+    <link href="/static/css/app-saas.min.css" rel="stylesheet" type="text/css" id="app-style" />
+
+    <!-- Icons css -->
+    <link href="/static/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!-- Begin page -->
+    <div class="wrapper">
+
+
+      <!-- ========== Topbar Start ========== -->
+      <div class="navbar-custom">
+        <div class="topbar container-fluid">
+          <div class="d-flex align-items-center gap-lg-2 gap-1">
+
+            <!-- Topbar Brand Logo -->
+            <div class="logo-topbar">
+              <!-- Logo light -->
+              <a href="index.html" class="logo-light">
+                <span class="logo-lg">
+                  <img src="assets/images/logo.png" alt="logo">
+                </span>
+
+              </a>
+
+              <!-- Logo Dark -->
+              <a href="index.html" class="logo-dark">
+                <span class="logo-lg">
+                  <img src="assets/images/logo-dark.png" alt="dark logo">
+                </span>
+                <span class="logo-sm">
+                  <img src="assets/images/logo-dark-sm.png" alt="small logo">
+                </span>
+              </a>
+            </div>
+
+            <!-- Sidebar Menu Toggle Button -->
+            <button class="button-toggle-menu">
+              <img src="/static/image/list.svg" alt="" style="width:30px;">
+
+            </button>
+
+            <!-- Horizontal Menu Toggle Button -->
+            <button class="navbar-toggle" data-bs-toggle="collapse" data-bs-target="#topnav-menu-content">
+              <div class="lines">
+
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </button>
+
+
+          </div>
+
+
+          <ul class="topbar-menu d-flex align-items-center gap-3">
+
+
+            <li class="d-none d-sm-inline-block">
+              <div class="nav-link" id="light-dark-mode" data-bs-toggle="tooltip" data-bs-placement="left"
+                title="Modo Oscuro">
+                <i><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                    class="bi bi-moon-stars" viewBox="0 0 16 16">
+                    <path
+                      d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 
+                      0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 
+                      0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278M4.858 1.311A7.269 7.269 0 0 0 1.025 
+                      7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 
+                      0-1.167.242-2.278.681-3.286z" />
+                    <path
+                      d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1
+                      0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734
+                        0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145
+                        0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 
+                        0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 
+                        0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+                  </svg></i>
+              </div>
+            </li>
+
+
+            <li class="d-none d-md-inline-block">
+              <a class="nav-link" href="" data-toggle="fullscreen">
+                <i><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                    class="bi bi-arrows-fullscreen" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                      d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707zm0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707m-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707" />
+                  </svg></i>
+
+              </a>
+            </li>
+
+            <li class="dropdown">
+              <a class="nav-link dropdown-toggle arrow-none nav-user px-2" data-bs-toggle="dropdown" href="#"
+                role="button" aria-haspopup="false" aria-expanded="false">
+                <span class="account-user-avatar">
+
+                </span>
+
+                <span class="d-lg-flex flex-column gap-1 d-none">
+                  <h5 class="my-0">{{ admin.nombre_admin }}</h5>
+                </span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
+
+
+                <!-- item-->
+                <a href="javascript:void(0);" class="dropdown-item">
+                  <i class="mdi mdi-account-circle me-1"></i>
+                  <span>Mi Perfil</span>
+                </a>
+
+                <!-- item-->
+                <a href="{{url_for('logout')}}" class="dropdown-item">
+                  <i class="mdi mdi-logout me-1"></i>
+                  <span>Salir</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- ========== Topbar End ========== -->
+
+      <!-- ========== Left Sidebar Start ========== -->
+      <div class="leftside-menu">
+
+        <!-- Brand Logo Light -->
+        <a href="index.html" class="logo logo-light">
+          <span class="logo-lg ">
+            <img src="/static/image/logo1.png" alt="logo"
+              style="width:120px; height:120px; background:#fff; border-radius:10px;"
+              class="d-flex align-items-center justify-content-center mt-3 mx-4">
+
+          </span>
+          <span class="logo-sm mx-auto" style="margin-top: 6em;">
+            <p class="text-light me-2" style="font-size: 10px;"></p>
+          </span>
+        </a>
+
+
+
+        <!-- Sidebar Hover Menu Toggle Button -->
+        <div class="button-sm-hover" data-bs-toggle="tooltip" data-bs-placement="right" title="Show Full Sidebar">
+          <i class="ri-checkbox-blank-circle-line align-middle"></i>
+        </div>
+        <!-- Full Sidebar Menu Close Button -->
+        <div class="button-close-fullsidebar">
+          <i class="ri-close-fill align-middle"></i>
+        </div>
+
+        <!-- Sidebar -left -->
+        <div class="h-100" id="leftside-menu-container" data-simplebar>
+          <!-- Leftbar User -->
+          <div class="leftbar-user">
+            <a href="pages-profile.html">
+              <img src="assets/images/users/avatar-1.jpg" alt="user-image" height="42" class="rounded-circle shadow-sm">
+              <span class="leftbar-user-name mt-2">Dominic Keller</span>
+            </a>
+          </div>
+
+          <!--- Sidemenu -->
+          <ul class="side-nav">
+
+            <li class="side-nav-item">
+              <a href="{{url_for('prueba')}}" class="side-nav-link">
+                <i><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-house"
+                    viewBox="0 0 16 16">
+                    <path
+                      d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
+                  </svg></i>
+                <span> Inicio </span>
+              </a>
+            </li>
+            <li class="side-nav-item">
+              <a href="{{url_for('dashboard')}}" class="side-nav-link">
+                <i><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                    class="bi bi-card-image" viewBox="0 0 16 16">
+                    <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                    <path
+                      d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5z" />
+                  </svg></i>
+                <span> Carrusel </span>
+              </a>
+            </li>
+
+            <li class="side-nav-item">
+              <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false"
+                aria-controls="sidebarDashboards" class="side-nav-link">
+                <i><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                    class="bi bi-collection" viewBox="0 0 16 16">
+                    <path
+                      d="M2.5 3.5a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1zm2-2a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zM0 13a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 13V6a1.5 1.5 0 0 0-1.5-1.5h-13A1.5 1.5 0 0 0 0 6zm1.5.5A.5.5 0 0 1 1 13V6a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5z" />
+                  </svg></i>
+                <span class="badge bg-success float-end">2</span>
+                <span>Catalogos </span>
+              </a>
+              <div class="collapse" id="sidebarDashboards">
+                <ul class="side-nav-second-level">
+
+                  <li>
+                    <a href="{{url_for('catalogo')}}"><i class="fa fa-car-side icono_menu"></i>Catalogo de Autos</a>
+                  </li>
+                  <li>
+                    <a href="{{url_for('catalogo_motos')}}"><i class="fa-solid fa-motorcycle icono_menu"></i>Catalogo de
+                      Motos</a>
+                  </li>
+            </li>
+
+          </ul>
+
+        </div>
+        </li>
+        <li class="side-nav-item">
+          <a data-bs-toggle="collapse" href="#sidebarCrm" aria-expanded="false" aria-controls="sidebarCrm"
+            class="side-nav-link">
+
+            <i><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                <path
+                  d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5" />
+                <path
+                  d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
+              </svg></i>
+            <span class="badge bg-success float-end">2</span>
+
+            <span> Cotizaciones</span>
+          </a>
+          <div class="collapse" id="sidebarCrm">
+            <ul class="side-nav-second-level">
+              <li>
+                <a href="{{url_for('cotizacion_autos')}}"> <i class="fa-solid fa-car-side icono_menu"></i>Cotizaciones de
+                  Autos</a>
+
+              </li>
+              <li>
+                <a href="{{url_for('cotizacion_motos')}}"><i class="fa-solid fa-motorcycle icono_menu"></i>Cotizaciones de
+                  motos</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+
+        <li class="side-nav-item">
+          <a href="#" class="side-nav-link">
+            <i><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-people"
+                viewBox="0 0 16 16">
+                <path
+                  d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4" />
+              </svg></i>
+            <span> Administradores </span>
+          </a>
+        </li>
+        <li class="side-nav-item">
+          <a href="{{url_for('graficas')}}" class="side-nav-link">
+            <i class="fa-solid fa-chart-simple" style="width: 25px; height:25px;"></i>
+            <span> Estadisticas </span>
+          </a>
+        </li>
+
+
+
+
+
+        </ul>
+
+      </div>
+    </div>
+    {%block administrador%}
+
+    {%endblock%}
+    <script src="{{ url_for('static', filename='js/functions.js') }}"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="  https://code.jquery.com/jquery-3.7.0.js
+    "></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css"
+      href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script src="/static/js/calcular.js"></script>
+    <script src="/static/js/slider_admin.js"></script>
+    <!-- Vendor js -->
+    <script src="/static/js/vendor.min.js"></script>
+    <!-- App js -->
+    <script src="https://kit.fontawesome.com/b33479a588.js" crossorigin="anonymous"></script>
+    <script src="/static/js/app.min.js"></script>
+
+    <script src="/static/js/prueba.js"></script>
+
+  </body>
+
+  </html>

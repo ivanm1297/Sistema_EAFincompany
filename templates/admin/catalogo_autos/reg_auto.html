@@ -1,0 +1,96 @@
+<!-- Modal para agregar auto -->
+<div class="modal" id="agregarAutoModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Agregar Nuevo Auto</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal Body - Formulario para agregar auto -->
+            <div class="modal-body">
+                <form action="/agregar_auto" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="modelo_auto">Modelo:</label>
+                        <input type="text" class="form-control" id="modelo_auto" name="modelo_auto" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="año_auto" class="titulos">Año:</label>
+                        <select name="año_auto" class="form-control" id="año_auto" required>
+                            <option value="">Selcciona el año</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                        </select>
+                        <label for="km_auto" class="titulos">Km:</label>
+                        <input type="text" class="form-control" id="km_auto" name="km_auto" required>
+                    </div>
+                    <div class="form-group">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="gasolina">Gasolina:</label>
+                        <div class="radio form-group">
+                            <input type="radio" name="gasolina" id="magna" value="Magna" required>
+                            <label for="magna">Magna</label>
+
+                            <input type="radio" name="gasolina" id="premium" value="Premium" >
+                            <label for="premium">Premium</label>
+
+                            <input type="radio" name="gasolina" id="disel" value="Disel">
+                            <label for="disel">Disel</label>
+                        </div>
+                    </div>
+                    <label for="gasolina">Tipo de Transmisión:</label>
+                    <div class="radio form-group">
+                        <input type="radio" name="transmision" id="estandar" value="Estandar" required>
+                        <label for="estandar">Estandar</label>
+
+                        <input type="radio" name="transmision" id="automatico" value="Automatico">
+                        <label for="automatico">Automatico</label>
+
+                        <input type="radio" name="transmision" id="hibrido" value="Hibrido">
+                        <label for="hibrido">Hibrido</label>
+                    </div>
+
+                    <!--<label for="transmision">Transimision:</label>
+                        <input type="text" class="form-control" id="transmision" name="transmision" >-->
+                    <div class="form-group">
+                        <label for="marca">Marca:</label>
+                        <input type="text" class="form-control" id="marca" name="marca" required>
+                        <div class="form-group">
+                            <label for="descripcion">Descripcion:</label>
+                            <textarea name="descripcion" class="form-control" id="descripcion"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="precio_lista">Precio en lista:</label>
+                        <input type="number" class="form-control" id="precio_lista" name="precio_lista" required>
+                        <label for="pago_inicial">Pago Inicial:</label>
+                        <input type="number" class="form-control" id="pago_inicial" name="pago_inicial" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="imagen">Imagen:</label>
+                        <input type="file" id="imagen" name="imagen" multiple onchange="handleImageSelection(event)"required>
+                        <div id="imagenPreview"></div>
+                        <textarea id="imageList" name="imageList" style="display: none;"></textarea>
+                    
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar Auto</button>
+
+            </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+</div>

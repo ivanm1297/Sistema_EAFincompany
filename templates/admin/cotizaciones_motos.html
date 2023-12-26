@@ -1,0 +1,116 @@
+{% extends 'base_admin.html' %}
+
+{% block administrador %}
+<style>
+    /* Estilos personalizados para las casillas del paginado */
+    .pagination .page-item .page-link {
+        background-color: red;
+        color: white;
+        margin-left: 2px;
+        margin-right: 2px;
+        height: 33px;
+    }
+    
+    .pagination .page-item.active .page-link {
+        background-color: white;
+        color: red;
+        border: 1px solid red;
+        margin-right: 2px;
+        height: 33px;
+    }
+    
+    .nav-btn {
+        height: 33px;
+        background-color: red;
+        color: white;
+    }
+    
+    /* Estilos para el contenedor que engloba el menú y la tabla */
+    .content-container {
+        padding-left: 60px; /* Ajusta este valor según el ancho de tu menú */
+        margin-top: 20px; /* Ajusta este valor según el espacio que desees entre el menú y la tabla */
+    }
+    
+    /* Estilos para hacer la tabla responsiva */
+    @media screen and (max-width: 767px) {
+        .content-container {
+            padding-left: 50%; /* La mitad del ancho de la pantalla */
+            margin-top: 20px; /* Ajusta este valor según el espacio que desees entre el menú y la tabla */
+        }
+    }
+    </style>
+<div class="container  mx-5 mt-4">
+    <div class="d-flex align-items-center justify-content-center">
+      <div class="titulo_tabla mb-3">
+        <h3>Tabla de Cotizaciones de Motos</h3>
+      </div>
+    </div>
+  </div>
+<div class="container mx-5">
+    <input type="text" name="busqueda_automatica" id="busqueda_automatica" placeholder="¿Qué Moto Buscas?" style="border: 2px solid #111; text-align:center; border-radius: 5px;">
+</div>
+
+<div class="container d-flex align-items-center justify-content-center content-container">
+    <!-- Menú de navegación vertical -->
+    <!-- Agrega aquí el código de tu menú de navegación vertical -->
+
+    <!-- Tu tabla -->
+    <div class="table-container">
+        <table id="tabla_cotizaciones" class="table">
+        <!-- Encabezados de la tabla -->
+        <thead style="background-color: #570606;">
+            <tr>
+                <th style="color: #fff;">Modelo</th>
+                <th style="color: #fff;">Año</th>
+                <th style="color: #fff;">Nombre del cliente</th>
+                <th style="color: #fff;">Apellido Paterno</th>
+                <th style="color: #fff;">Apellido Materno</th>
+                <th style="color: #fff;">Telefono</th>
+                <th style="color: #fff;">Correo</th>
+                <th style="color: #fff;">Fecha de la cotizacion</th>
+                <th style="color: #fff;">Opcion</th>
+                
+            </tr>
+        </thead>
+        <!-- Cuerpo de la tabla -->
+        <tbody>
+            {% for cotizacion_moto in cotizacion_moto %} 
+            <tr>
+                <td>{{ cotizacion_moto.modelo_coti_moto }}</td>
+                <td>{{ cotizacion_moto.año_coti_moto }}</td>
+                <td>{{ cotizacion_moto.nombre_comp }}</td>        
+                <td>{{ cotizacion_moto.ap_coti_moto }}</td>
+                <td>{{ cotizacion_moto.am_coti_moto }}</td>
+                <td>{{ cotizacion_moto.celular_coti_moto }}</td>
+                <td>{{ cotizacion_moto.correo_coti_moto }}</td>
+                    <td>{{ cotizacion_moto.fecha_coti}}</td>
+                <td> <a class="btn btn-outline-danger" href="{{ url_for('eliminar_cotizacion_moto', id_coti_moto=cotizacion_moto.id_coti_moto) }}"
+                    onclick="return confirm('¿Estás seguro de que deseas eliminar esta cotizacion')" style="border-radius: 5px;">
+                    <i class="fa fa-trash"></i>
+                </a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+
+</div>
+<!-- Mensaje de "registro no encontrado" -->
+<div class="container" id="mensajeNoEncontrado" style="display: none;">
+    <p style="font-weight: bold; color:#111; text-align:center;">No se han encontrado coincidencias</p>
+</div>
+<div class="container d-flex justify-content-center ">
+
+    <div class="d-flex paginado">
+        <button class="btn nav-btn me-1" id="previousBtn" ><i class="fa-solid fa-backward"></i></button>
+
+        <nav aria-label="Page navigation">
+
+            <ul class="pagination" id="pagination" style="margin-right: 3px;"></ul>
+        </nav>
+        <button class="btn nav-btn ms-1" id="nextBtn" ><i class="fa-solid fa-forward"></i></button>
+    </div>
+</div>
+
+{% endblock %}

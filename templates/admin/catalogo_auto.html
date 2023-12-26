@@ -1,0 +1,132 @@
+
+{% extends 'base_admin.html' %}
+
+{% block administrador %}
+<style>
+    /* Estilos personalizados para las casillas del paginado */
+    .pagination .page-item .page-link {
+        background-color: red;
+        color: white;
+        margin-left: 2px;
+        margin-right: 2px;
+        height: 33px;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: white;
+        color: red;
+        border: 1px solid red;
+        margin-right: 2px;
+        height: 33px;
+    }
+
+    .nav-btn {
+        height: 33px;
+        background-color: red;
+        color: white;
+    }
+
+    /* Estilos para el contenedor que engloba el menú y la tabla */
+    .content-container {
+        padding-left: 60px; /* Ajusta este valor según el ancho de tu menú */
+        margin-top: 20px; /* Ajusta este valor según el espacio que desees entre el menú y la tabla */
+    }
+
+    /* Estilos para hacer la tabla responsiva */
+    @media screen and (max-width: 767px) {
+        .content-container {
+            padding-left: 50%; /* La mitad del ancho de la pantalla */
+            margin-top: 20px; /* Ajusta este valor según el espacio que desees entre el menú y la tabla */
+        }
+    }
+</style>
+
+
+ 
+<div class="container mx-5 my-3 d-flex justify-content-between align-items-center">
+    <input type="text" name="busqueda_automatica" id="busqueda_automatica" placeholder="¿Qué Moto Buscas?" style="border: 2px solid #111; text-align:center; border-radius: 5px;">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarAutoModal">
+        Agregar Auto
+    </button>
+    {% include 'admin/catalogo_autos/reg_auto.html' %}
+
+</div>
+
+<!-- Contenedor que engloba el menú y la tabla con padding izquierdo -->
+<div class="container d-flex align-items-center justify-content-center content-container">
+    <!-- Menú de navegación vertical -->
+    <!-- Agrega aquí el código de tu menú de navegación vertical -->
+
+    <!-- Tu tabla -->
+    <div class="table-container">
+        <table id="miTabla" class="table">
+            <!-- Encabezados de la tabla -->
+            <thead style="background-color: #570606;">
+                <tr>
+                    <th style="color: #fff; font-size:14px;">Modelo</th>
+                    <th style="color: #fff; font-size:14px;">Año</th>
+                    <th style="color: #fff; font-size:14px;">Combustible</th>
+                    <th style="color: #fff; font-size:14px;">Transmisión</th>
+                    <th style="color: #fff; font-size:14px;">Marca</th>
+                    <th style="color: #fff; font-size:14px;">Imagen</th>
+                    <th style="color: #fff; font-size:14px;">Descripción</th>
+                    <th style="color: #fff; font-size:14px;">Precio-lista</th>
+                    <th style="color: #fff; font-size:14px;">Pago Inicial</th>
+                    <th style="color: #fff; font-size:14px;">Opciones</th>
+                    <!-- ... (resto del código de las celdas) ... -->
+                </tr>
+            </thead>
+            <!-- Cuerpo de la tabla -->
+            <tbody>
+                {% for catalogo in catalogo %}
+                <tr>
+                    <td style="font-size: 13px;">{{ catalogo.modelo_auto }}</td>
+                    <td style="font-size: 13px;">{{ catalogo.año_auto }}</td>
+                    <td style="font-size: 13px;">{{ catalogo.gasolina }}</td>
+                    <td style="font-size: 13px;">{{ catalogo.transmision }}</td>
+                    <td style="font-size: 13px;">{{ catalogo.marca }}</td>
+                    <td>
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for imagen in catalogo.imagen.split(',') %}
+                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                    <img class="foto_2" src="{{ url_for('static', filename='image/catalogo_autos/' + imagen) }}">
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </td>
+                    <td style="white-space: normal; overflow: hidden; font-size:13px;">{{ catalogo.descripcion | truncate(300) }}</td>
+                    <td style="font-size: 13px;">${{ catalogo.pago_inicial }}</td>
+                    <td style="font-size: 13px;">${{ catalogo.precio_lista }}</td>
+                    <td>
+                        <a class="btn btn-outline-danger" href="{{ url_for('eliminar_auto', id_auto=catalogo.id_auto) }}"
+                            onclick="return confirm('¿Estás seguro de que deseas eliminar este auto?')" style="border-radius: 5px;">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        <a class="btn btn-outline-success" data-toggle="modal" data-target="#actAutoModal{{catalogo.id_auto}}"
+                            style="border-radius: 5px;">
+                            <i class="fa fa-pen-to-square"></i>
+                        </a>
+                        {% include 'admin/catalogo_autos/act_auto.html' %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="container d-flex justify-content-center ">
+
+    <div class="d-flex paginado">
+        <button class="btn nav-btn me-1" id="previousBtn" ><i class="fa-solid fa-backward"></i></button>
+
+        <nav aria-label="Page navigation">
+
+            <ul class="pagination" id="pagination" style="margin-right: 3px;"></ul>
+        </nav>
+        <button class="btn nav-btn ms-1" id="nextBtn" ><i class="fa-solid fa-forward"></i></button>
+    </div>
+</div>
+{% endblock %}

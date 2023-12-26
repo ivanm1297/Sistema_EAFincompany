@@ -1,0 +1,78 @@
+{%extends 'base_admin.html'%}
+
+{%block administrador%}
+
+<div class="container" style="margin-top:5em;">
+  <!-- Botón para abrir el modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#miModal">
+    Agregar Imagen
+  </button>
+  {%include 'admin/op_carrusel/reg_imagen.html'%}
+
+</div>
+
+<div class="container mx-auto ">
+
+  <div class="d-flex">
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Imagen</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for imagen in imagenes %}
+          <tr>
+            <td>
+              <img src="{{ url_for('static', filename='/image/carrusel/' + imagen.imagen) }}" alt="{{ imagen.alt }}"
+                style="max-width: 100px; max-height: 100px;">
+            </td>
+            <td>
+              <a href="{{ url_for('eliminar_imagen', id_imagen=imagen.id_imagen) }}" class="btn btn-danger">Eliminar</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div id="pagination" class="text-center">
+        <ul class="pagination"></ul>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          {% for imagen in imagenes %}
+          <div class="carousel-item {% if loop.first %}active{% endif %}">
+            <img class="d-block mx-auto" src="{{ url_for('static', filename='/image/carrusel/' + imagen.imagen) }}"
+              alt="{{ imagen.alt }}" style="max-width: 100%; max-height: 300px;">
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Controles de navegación -->
+        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black;"></span>
+          <span class="sr-only" style="color: rgb(0, 0, 0);">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: black;"></span>
+          <span class="sr-only" style="color: rgb(29, 25, 25);">Siguiente</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+{%endblock%}

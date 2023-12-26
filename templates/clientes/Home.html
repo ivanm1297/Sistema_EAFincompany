@@ -1,0 +1,77 @@
+{% extends "clientes/base.html" %}
+{% block contenido %}
+<section class=" carrusel">
+    <div class="">
+        <div class="">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicadores -->
+                <ol class="carousel-indicators">
+                    {% for imagen in imagenes %}
+                    <li data-target="#myCarousel" data-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active" {%
+                        endif %}></li>
+                    {% endfor %}
+                </ol>
+
+                <div class="carousel-inner">
+                    {% for imagen in imagenes %}
+                    <div class="carousel-item {% if loop.first %}active{% endif %}">
+                        <img class="d-block w-100 img-fixed-height"
+                            src="{{ url_for('static', filename='/image/carrusel/' + imagen.imagen) }}"
+                            alt="{{ imagen.alt }}">
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Controles de navegación -->
+                <a class="carousel-control-prev indicadores" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Anterior</span>
+                </a>
+                <a class="carousel-control-next indicadores" href="#myCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Siguiente</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="info_empresa mx-3 my-5">
+    <p class="descrip_empresa">Somos una empresa líder en el sector financiero con una sólida trayectoria de más de 5
+        años en la gestión de créditos y
+        financiamiento de vehículos, especializándonos en la adquisición de motos y automóviles. Nuestra empresa,
+        conocida
+        como E&A Company, se ha convertido en un referente confiable y confiable en el mercado de préstamos y
+        financiamiento de vehículos. Nuestra misión es brindar soluciones financieras accesibles y convenientes para que
+        las personas puedan
+        adquirir sus vehículos de manera eficiente y sin complicaciones. Entendemos que la compra de un automóvil o una
+        moto es
+        una inversión importante para nuestros clientes, y estamos comprometidos a ofrecer opciones de financiamiento
+        flexibles y competitivas que se adapten a sus necesidades y presupuesto.</p>
+</div>
+
+<div class="container">
+    <div class="card mb-3 mt-4" >
+        <div class="row g-0" >
+            <div class="col-md-4">
+                <img src="/static/image/Logo2.webp" class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title titulo">Financiemiento Automotriz</h5>
+                    <hr>
+                    <p class="card-text pb-5">El financiamiento de autos, es una solucion integral diseñada para
+                        brindarle a nuestros
+                        clientes la oportunidad de daiquirir el auto de sus sueños</p>
+                    <a href="{{url_for('financiamiento')}}" class="btn btn-primary btn-right" style="background-color: #771717;">Saber más</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{%extends 'clientes/base.html'%}
+
+{%block contenido%}
+<div style="margin-top: 7em;">jhdshfkjsf</div>
+{% for auto in resultados %}
+    <p>{{ auto.modelo_auto }} - {{ auto.marca }}</p>
+    <!-- Agrega más campos según sea necesario -->
+{% endfor %}
+
+{%endblock%}

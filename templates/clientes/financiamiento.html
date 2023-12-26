@@ -1,0 +1,195 @@
+{% extends 'clientes/base.html' %}
+
+{% block contenido %}
+
+
+<section id="finauto">
+    <div class="container" style="margin-top: 7rem;">
+        <div class="seccionautos">
+            <div class="autos">
+                <p class="titulo">Financiamiento de autos</p>
+                <hr>
+                <p class="texto">El financiamiento de autos ofrecido por E&A Company es una solución integral diseñada
+                    para
+                    brindar a nuestros clientes la oportunidad de adquirir el vehículo de sus sueños de manera accesible
+                    y
+                    conveniente. Con años de experiencia en el mercado financiero, en E&A Company entendemos que la
+                    compra de un automóvil es una inversión importante y, por lo tanto, ofrecemos un servicio de
+                    financiamiento a plazos fijos que se adapta a las necesidades individuales de cada cliente.</p>
+                </p>
+            </div>
+
+            <div class="logos_autos">
+                <p class="titulo">Marcas mas vendidas</p>
+                <div id="marca-info"></div>
+
+                <div class="d-flex justify-content-center flex-wrap">
+                    <a href="#" class="mx-2 my-2"><img src="/static/image/Logos de marcas/mazda.png"
+                            class="logos_marcas" title="Mazda"></a>
+                    <a href="" class="mx-2 my-2"><img src="/static/image/Logos de marcas/Nissan.png" alt=""
+                            class="logos_marcas" title="Nissan"></a>
+                    <a href="" class="mx-2 my-2"><img src="/static/image/Logos de marcas/Jeep.jpg" alt=""
+                            class="logos_marcas" title="Jepp"></a>
+
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="container">
+        {% for auto in catalogo %}
+        <div class="card mb-3" style="border: 3px solid #c74747;">
+            <a href="{{ url_for('info_unidad', id_auto=auto.id_auto) }}" style="text-decoration: none; color: inherit;">
+                <div class="year-badge position-absolute top-0 end-0">
+                    <span>{{ auto.año_auto }}</span>
+                </div>
+            </a>
+            <div class="row g-0">
+                <div class="col-md-4">
+                    
+                    <div id="carousel{{ auto.id_auto }}" class="carousel slide" data-ride="carousel"
+                        data-interval="3000"> <!-- Set the interval in milliseconds (e.g., 5000 for 5 seconds) -->
+                        <div class="carousel-inner my-3 p-3" >
+                            
+                            {% for imagen in auto.imagen.split(',') %}
+                            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                <img class="d-block mx-auto carousel-img"
+                                    src="{{ url_for('static', filename='/image/catalogo_autos/' + imagen) }}"
+                                    alt="{{ auto.marca }} {{ auto.modelo_auto }}">
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev bg-dark my-auto" style="border-radius: 50%; height: 30px; width: 30px; padding: 15px;"
+                        href="#carousel{{ auto.id_auto }}" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" style="padding: 10px;" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next bg-dark my-auto" style="border-radius: 50%; height: 30px; width: 30px; padding: 15px;"
+                    href="#carousel{{ auto.id_auto }}" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" style="padding: 10px;" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        
+                        <h5 class="card-title titulo">{{ auto.marca }} {{ auto.modelo_auto }}</h5>
+                        <hr>
+                        <p class="card-text mb-3">{{ auto.descripcion|truncate(200) }}</p>
+
+                        <div class="icon-container mt-2">
+                            <i class="fa-solid fa-gas-pump"></i>{{auto.gasolina}}
+                          </div>
+                          <div class="icon-container">
+                            <i class="fa-solid fa-gauge"></i>{{auto.gasolina}}
+                          </div>
+                          <div class="saber_mas mt-4">
+                            <a href="{{ url_for('info_unidad', id_auto=auto.id_auto) }}"
+                            class="btn btn-right" style="background-color: #771717; color:#fff; position:absolute; margin-top:10px;">Saber más</a>
+                  </div>
+                          </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+    
+    
+    <a class="catalogo btn btn-outline-danger" href="{{url_for('catalogo_auto')}}">Ver catalogo</a>
+
+</section>
+
+<section style="margin-bottom: 5em;" id="finmoto">
+    <div class="container" style="margin-top: 7rem;">
+        <div class="seccionmotos">
+            <div class="autos">
+                <p class="titulo">Financiamiento de motos</p>
+                <hr>
+                <p class="texto">E&A Company ofrece financiamiento de motos a plazos fijos para hacer que tu pasión por
+                    la conducción sea una realidad accesible. Nuestro proceso es simple y adaptable a tu presupuesto.
+                    Con tasas competitivas y opciones flexibles, nuestros asesores te ayudan a cumplir tu sueño de tener
+                    una moto propia. En E&A Company, convertirte en motociclista es fácil y emocionante.</p>
+            </div>
+
+            <div class="logos_autos">
+                <p class="titulo">Marcas mas visitas</p>
+                <div class="d-flex justify-content-center flex-wrap">
+                    <a href="#" class="mx-2 my-2"><img src="/static/image/Logos de marcas/Motos/Ducati.png"
+                            class="logos_marcas" alt=""></a>
+                    <a href="" class="mx-2 my-2"><img src="/static/image/Logos de marcas/Motos/italika.svg" alt=""
+                            class="logos_marcas"></a>
+                    <a href="" class="mx-2 my-2"><img src="/static/image/Logos de marcas/Motos/vento.png" alt=""
+                            class="logos_marcas"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        {% for moto in catalogo_motos %}
+        <div class="card mb-3" style="border: 3px solid #c74747;">
+            <a href="{{ url_for('info_moto', id_moto=moto.id_moto) }}"
+                    style="text-decoration: none; color: inherit;">
+                    <div class="year-badge position-absolute top-0 end-0">
+                        <span>{{ moto.año_moto }}</span>
+                    </div>
+                    </a>
+            <div class="row g-0">
+                <div class="col-md-4">
+                    
+                    <div id="carousel{{ moto.id_moto }}" class="carousel slide" data-ride="carousel"
+                        data-interval="3000"> <!-- Set the interval in milliseconds (e.g., 5000 for 5 seconds) -->
+                        <div class="carousel-inner my-3 p-3" >
+                            
+                            {% for imagen in moto.imagen.split(',') %}
+                            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                <img class="d-block mx-auto carousel-img"
+                                    src="{{ url_for('static', filename='/image/catalogo_motos/' + imagen) }}"
+                                    alt="{{ moto.marca }} {{ moto.modelo_moto }}">
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev bg-dark my-auto" style="border-radius: 50%; height: 30px; width: 30px; padding: 15px;"
+                        href="#carousel{{ moto.id_moto }}" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" style="padding: 10px;" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next bg-dark my-auto" style="border-radius: 50%; height: 30px; width: 30px; padding: 15px;"
+                    href="#carousel{{ moto.id_moto }}" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" style="padding: 10px;" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        
+                        <h5 class="card-title titulo">{{ moto.marca }} {{ moto.modelo_moto }}</h5>
+                        <hr>
+                        <p class="card-text mb-3">{{ moto.descripcion|truncate(200) }}</p>
+
+                        <div class="icon-container mt-2">
+                            <i class="fa-solid fa-gas-pump"></i>{{moto.gasolina}}
+                          </div>
+                          <div class="icon-container">
+                            <i class="fa-solid fa-gauge"></i>{{moto.gasolina}}
+                          </div>
+                          <div class="saber_mas mt-4">
+                            <a href="{{ url_for('info_moto', id_moto=moto.id_moto) }}"
+                            class="btn btn-right" style="background-color: #771717; color:#fff; position:absolute; margin-top:10px;">Saber más</a>
+                  </div>
+                          </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <a class="catalogo btn btn-outline-danger" href="{{url_for('catalogo_moto')}}">Ver catalogo</a>
+
+    
+
+</section>
+
+
+{%endblock%}
