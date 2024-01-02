@@ -5,9 +5,16 @@ from conex import DATABASE_URI
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
 import os
+from datetime import datetime, timedelta
+import numpy as np
+import matplotlib.pyplot as plt
+import calendar
+
 from flask import jsonify
 from random import choice  # Import the 'choice' function from the 'random' module
 from datetime import datetime
+import base64
+import plotly.express as px
 
 
 from functools import wraps
@@ -539,10 +546,39 @@ def eliminar_cotizacion_moto(id_coti_moto):
     return redirect(url_for('cotizacion_motos'))
 
 
-@app.get('/graficas')
+
+@app.route('/graficas')
 def graficas():
     admin = tbl_admin.query.get(session['administrador_id'])
-    modelos_cotizados = (
+
+    # Obtener cotizaciones de autos por día en MySQL
+    cotizaciones_por_dia = (
+        db.session.query(
+            db.func.DATE(tbl_coti_autos.fecha_coti).label('dia'),
+            db.func.count(tbl_coti_autos.id_coti_auto).label('total_cotizaciones')
+        )
+        .group_by('dia')
+        .order_by('dia')
+        .all()
+    )
+
+    # Crear datos para la gráfica de líneas
+    dias = [cotizacion.dia for cotizacion in cotizaciones_por_dia]
+    total_cotizaciones_por_dia = [cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_dia]
+
+    # Crear gráfica de líneas para el total de cotizaciones por día
+    fig_lineas = px.line(x=dias, y=total_cotizaciones_por_dia, labels={'x': 'Día', 'y': 'Total de Cotizaciones por Día'})
+
+    # Configurar la visualización para permitir la navegación
+    fig_lineas.update_layout(xaxis=dict(type='category', fixedrange=True), yaxis=dict(fixedrange=True))
+
+    # Configurar la visualización para ocultar la barra de herramientas
+    graph_lineas = fig_lineas.to_html(full_html=False, config={'displayModeBar': False})
+
+    # Resto del código...
+
+    # Obtener modelos cotizados de autos
+    modelos_cotizados_autos = (
         db.session.query(
             tbl_coti_autos.modelo_coti_auto,
             db.func.count(tbl_coti_autos.id_coti_auto).label('total_cotizaciones')
@@ -552,8 +588,70 @@ def graficas():
         .all()
     )
 
+    # Obtener modelos cotizados de motos
+    modelos_cotizados_motos = (
+        db.session.query(
+            tbl_coti_motos.modelo_coti_moto,
+            db.func.count(tbl_coti_motos.id_coti_moto).label('total_cotizaciones')
+        )
+        .group_by(tbl_coti_motos.modelo_coti_moto)
+        .order_by(db.desc('total_cotizaciones'))
+        .limit(4)
+        .all()
+    )
 
-    return render_template('admin/graficas.html', admin=admin, modelos_cotizados=modelos_cotizados)
+    # Crear datos para la gráfica de autos
+    modelos_autos = [modelo[0] for modelo in modelos_cotizados_autos]
+    cotizaciones_autos = [modelo[1] for modelo in modelos_cotizados_autos]
+
+    # Limitar a los 4 valores más altos solo para la gráfica de barras
+    modelos_barras = modelos_autos[:4]
+    cotizaciones_barras = cotizaciones_autos[:4]
+
+    # Crear datos para la gráfica de motos
+    modelos_motos = [modelo[0] for modelo in modelos_cotizados_motos]
+    cotizaciones_motos = [modelo[1] for modelo in modelos_cotizados_motos]
+
+    # Crear gráfica de barras para autos
+    fig_autos = px.bar(x=modelos_barras, y=cotizaciones_barras, labels={'x': 'Modelo Auto', 'y': 'Total de Cotizaciones Autos'})
+
+    # Crear gráfica de barras para motos
+    fig_motos = px.bar(x=modelos_motos, y=cotizaciones_motos, labels={'x': 'Modelo Moto', 'y': 'Total de Cotizaciones Motos'})
+
+    # Obtener cotizaciones de autos por mes en MySQL
+    cotizaciones_por_mes = (
+        db.session.query(
+            db.func.MONTH(tbl_coti_autos.fecha_coti).label('mes'),
+            db.func.count(tbl_coti_autos.id_coti_auto).label('total_cotizaciones')
+        )
+        .group_by('mes')
+        .order_by('mes')
+        .all()
+    )
+
+    # Crear datos para la gráfica de pastel de autos
+    meses = [calendar.month_name[cotizacion.mes] for cotizacion in cotizaciones_por_mes]
+    total_cotizaciones_por_mes = [cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_mes]
+
+    # Obtener el nombre del mes actual en español
+    nombre_mes_actual = calendar.month_name[datetime.now().month]
+
+    # Crear gráfica de pastel para autos con etiquetas personalizadas
+    fig_pastel_autos = px.pie(
+        names=meses,
+        values=total_cotizaciones_por_mes,
+        title=f'Distribución de Cotizaciones de Autos de {nombre_mes_actual}'
+    )
+
+    # Configurar la visualización para ocultar la barra de herramientas
+    graph_autos = fig_autos.to_html(full_html=False, config={'displayModeBar': False})
+    graph_motos = fig_motos.to_html(full_html=False, config={'displayModeBar': False})
+    graph_pastel_autos = fig_pastel_autos.to_html(full_html=False, config={'displayModeBar': False})
+
+    return render_template('admin/graficas.html', admin=admin, graph_lineas=graph_lineas, graph_autos=graph_autos, graph_motos=graph_motos, graph_pastel_autos=graph_pastel_autos)
+
+
+
 @app.route('/get_cotizaciones', methods=['GET'])
 def get_cotizaciones():
     autos_con_mayor_cotizacion = tbl_coti_autos.query.order_by(tbl_coti_autos.fecha_coti.desc()).limit(5).all()
