@@ -1,15 +1,10 @@
-<!-- Modal para agregar auto -->
 <div class="modal" id="agregarAutoModal">
     <div class="modal-dialog">
         <div class="modal-content">
-
-            <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Agregar Nuevo Auto</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-
-            <!-- Modal Body - Formulario para agregar auto -->
             <div class="modal-body">
                 <form action="/agregar_auto" method="post" enctype="multipart/form-data">
                     <div class="form-group">
@@ -59,9 +54,6 @@
                         <input type="radio" name="transmision" id="hibrido" value="Hibrido">
                         <label for="hibrido">Hibrido</label>
                     </div>
-
-                    <!--<label for="transmision">Transimision:</label>
-                        <input type="text" class="form-control" id="transmision" name="transmision" >-->
                     <div class="form-group">
                         <label for="marca">Marca:</label>
                         <input type="text" class="form-control" id="marca" name="marca" required>

@@ -164,6 +164,9 @@ input[type="radio"]:checked + label:before{
     resize: none;
     height: 100px;
 }
+#miLogo {
+    display: none;
+}
 .foto_2{
   object-fit: contain;
     justify-content: center;
@@ -187,4 +190,73 @@ input[type="radio"]:checked + label:before{
     font-size: 25px;
     font-weight: bold;
     margin-top: 1.5em;
+}
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Cambia el color de fondo a tu preferencia */
+    color: #333;
+}
+
+/* Estilo para las filas impares */
+.table tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* Cambia el color de fondo a tu preferencia */
+}
+#rep_coti{
+    display: none;
+}
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+   
+    #tabla_cotizaciones {
+        margin-top: 12em;
+        font-size: 300px;
+    }
+
+    #miTabla,
+    #miTabla * {
+        visibility: visible;
+    }
+
+    #miTabla {
+        
+        position: relative;
+        left: 0;
+        top: 9em;
+        background-color: #570606;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+
+    .table tbody tr:nth-child(odd) {
+        background-color: #ffffff;
+    }
+    #miLogo, #miLogo * {
+        visibility: visible;
+        display: block;
+    }
+
+    #miLogo {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 50px; /* Ajusta el ancho según sea necesario */
+        height: 50px; /* Ajusta la altura según sea necesario */
+        /* Agrega estilos adicionales según sea necesario */
+    }
+    #rep_coti, #rep_coti *{
+        visibility: visible;
+        display: inline;
+    }
+    #rep_coti{
+        position: absolute;
+        left:0;
+        top: 2.7em;
+        width: 100%;
+    }
+
 }

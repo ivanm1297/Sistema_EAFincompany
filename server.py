@@ -204,7 +204,6 @@ def catalogo():
 @app.post('/agregar_auto')
 def agregar_auto():
     if request.method == 'POST':
-        # Otros campos del formulario
         modelo_auto = request.form['modelo_auto']
         año_auto = request.form['año_auto']
         km_auto = request.form['km_auto']
@@ -214,22 +213,19 @@ def agregar_auto():
         descripcion = request.form['descripcion']
         precio_lista = request.form['precio_lista']
         pago_inicial = request.form['pago_inicial']
-        # Obtener la lista de archivos de imágenes
         imagen = request.files.getlist('imagen')
 
-        nombres_imagenes = []  # Almacenará los nombres de archivo de las imágenes
+        nombres_imagenes = []  
 
         for imagen in imagen:
             if imagen and allowed_file(imagen.filename):
                 filename = secure_filename(imagen.filename)
                 ruta = os.path.join(app.config['UPLOAD_FOLDER_2'], filename)
                 imagen.save(ruta)
-                nombres_imagenes.append(filename)  # Agrega el nombre de la imagen a la lista
+                nombres_imagenes.append(filename)  
 
-        # Convierte la lista de nombres de archivo en una cadena separada por comas
         imagenes_str = ",".join(nombres_imagenes)
 
-        # Crea un nuevo objeto tbl_catal_autos con los datos recibidos, incluyendo la cadena de imágenes
         nuevo_auto = tbl_catal_autos(
             modelo_auto=modelo_auto,
             año_auto=año_auto,
@@ -240,7 +236,7 @@ def agregar_auto():
             descripcion=descripcion,
             pago_inicial=pago_inicial,
             precio_lista=precio_lista,
-            imagen=imagenes_str  # Almacena la cadena de nombres de archivos en la base de datos
+            imagen=imagenes_str 
         )
 
         db.session.add(nuevo_auto)
@@ -278,6 +274,8 @@ def actualizar_auto(id_auto):
     act_transmision = request.form['act_transmision']
     act_marca = request.form['act_marca']
     act_descripcion = request.form['act_descripcion']
+    act_pago_inicial = request.form['act_pago_inicial']
+    act_precio_lista = request.form['act_precio_lista']
 
     
     if act_modelo_auto != None and act_modelo_auto != '':
@@ -299,7 +297,81 @@ def actualizar_auto(id_auto):
         catalogo.marca = act_marca
     
     if act_descripcion != None and act_descripcion != '':
-        catalogo.descipcion = act_descripcion
+        catalogo.descripcion = act_descripcion
+    
+    if act_pago_inicial != None and act_pago_inicial != '':
+        catalogo.pago_inicial = act_pago_inicial
+    
+    if act_precio_lista != None and act_precio_lista != '':
+        catalogo.precio_lista = act_precio_lista
+        
+      # Obtener la lista de archivos de imágenes del formulario
+    nuevas_imagenes = request.files.getlist('act_imagen')
+
+    nombres_nuevas_imagenes = []  # Almacenará los nombres de archivo de las nuevas imágenes
+
+    # Procesar las nuevas imágenes
+    for nueva_imagen in nuevas_imagenes:
+        if nueva_imagen and allowed_file(nueva_imagen.filename):
+            nuevo_nombre = secure_filename(nueva_imagen.filename)
+            nueva_ruta = os.path.join(app.config['UPLOAD_FOLDER_2'], nuevo_nombre)
+            nueva_imagen.save(nueva_ruta)
+            nombres_nuevas_imagenes.append(nuevo_nombre)
+
+    # Agregar los nuevos nombres de archivo a la lista existente en la base de datos
+    if nombres_nuevas_imagenes:
+        imagenes_actuales = catalogo.imagen.split(",") if catalogo.imagen else []
+        imagenes_actuales.extend(nombres_nuevas_imagenes)
+        catalogo.imagen = ",".join(imagenes_actuales)
+    db.session.add(catalogo)
+    db.session.commit()
+
+    return redirect(url_for('catalogo'))
+
+@app.get('/eliminar_moto/<id_moto>')
+@login_required
+def eliminar_moto(id_moto):
+    catalogo = tbl_catal_motos.query.get(id_moto)
+
+    if not catalogo:
+        flash('El moto no existe', 'error')
+        return redirect(url_for('catalogo'))
+
+    # Realizar la eliminación del catalogo
+    db.session.delete(catalogo)
+    db.session.commit()
+
+    flash('Auto eliminado exitosamente', 'success')
+    return redirect(url_for('catalogo_motos '))
+
+@app.post('/actualizar_moto/<id_moto>/post')
+def actualizar_moto(id_moto):
+    catalogo = tbl_catal_motos.query.get(id_moto)
+    act_modelo_moto = request.form['act_modelo_moto']
+    act_año_moto = request.form['act_año_moto']
+    act_gasolina = request.form['act_gasolina']
+    act_transmision = request.form['act_transmision']
+    act_marca = request.form['act_marca']
+    act_descripcion = request.form['act_descripcion']
+
+    
+    if act_modelo_moto != None and act_modelo_moto != '':
+        catalogo_motos.modelo_moto = act_modelo_moto
+        
+    if act_año_moto != None and act_año_moto != '':
+        catalogo_motos.año_moto= act_año_moto        
+    
+    if act_gasolina != None and act_gasolina != '':
+        catalogo_motos.gasolina = act_gasolina
+    
+    if act_transmision != None and act_transmision != '':
+        catalogo_motos.trasmision = act_transmision
+    
+    if act_marca != None and act_marca != '':
+        catalogo_motos.marca = act_marca
+    
+    if act_descripcion != None and act_descripcion != '':
+        catalogo_motos.descipcion = act_descripcion
         
       # Obtener la lista de archivos de imágenes del formulario
     nuevas_imagenes = request.files.getlist('act_imagen')
@@ -365,6 +437,7 @@ def catalogo_motos():
     admin = tbl_admin.query.get(session['administrador_id'])
     catalogo = tbl_catal_motos.query.all()
     return render_template('admin/catalogo_motos.html', catalogo=catalogo, admin=admin)
+
 @app.post('/agregar_moto')
 def agregar_moto():
     if request.method == 'POST':
@@ -552,7 +625,7 @@ def graficas():
     admin = tbl_admin.query.get(session['administrador_id'])
 
     # Obtener cotizaciones de autos por día en MySQL
-    cotizaciones_por_dia = (
+    cotizaciones_por_dia_autos = (
         db.session.query(
             db.func.DATE(tbl_coti_autos.fecha_coti).label('dia'),
             db.func.count(tbl_coti_autos.id_coti_auto).label('total_cotizaciones')
@@ -562,20 +635,18 @@ def graficas():
         .all()
     )
 
-    # Crear datos para la gráfica de líneas
-    dias = [cotizacion.dia for cotizacion in cotizaciones_por_dia]
-    total_cotizaciones_por_dia = [cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_dia]
+    # Crear datos para la gráfica de líneas de autos
+    dias_autos = [cotizacion.dia for cotizacion in cotizaciones_por_dia_autos]
+    total_cotizaciones_por_dia_autos = [cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_dia_autos]
 
-    # Crear gráfica de líneas para el total de cotizaciones por día
-    fig_lineas = px.line(x=dias, y=total_cotizaciones_por_dia, labels={'x': 'Día', 'y': 'Total de Cotizaciones por Día'})
+    # Crear gráfica de líneas para el total de cotizaciones de autos por día
+    fig_lineas_autos = px.line(x=dias_autos, y=total_cotizaciones_por_dia_autos, labels={'x': 'Día', 'y': 'Total de Cotizaciones por Día'})
 
     # Configurar la visualización para permitir la navegación
-    fig_lineas.update_layout(xaxis=dict(type='category', fixedrange=True), yaxis=dict(fixedrange=True))
+    fig_lineas_autos.update_layout(xaxis=dict(type='category', fixedrange=True), yaxis=dict(fixedrange=True))
 
     # Configurar la visualización para ocultar la barra de herramientas
-    graph_lineas = fig_lineas.to_html(full_html=False, config={'displayModeBar': False})
-
-    # Resto del código...
+    graph_lineas_autos = fig_lineas_autos.to_html(full_html=False, config={'displayModeBar': False})
 
     # Obtener modelos cotizados de autos
     modelos_cotizados_autos = (
@@ -587,6 +658,69 @@ def graficas():
         .order_by(db.desc('total_cotizaciones'))
         .all()
     )
+
+    # Crear datos para la gráfica de barras de autos
+    modelos_autos = [modelo[0] for modelo in modelos_cotizados_autos]
+    cotizaciones_autos = [modelo[1] for modelo in modelos_cotizados_autos]
+
+    # Limitar a los 4 valores más altos solo para la gráfica de barras
+    modelos_barras_autos = modelos_autos[:4]
+    cotizaciones_barras_autos = cotizaciones_autos[:4]
+
+    # Crear gráfica de barras para autos
+    fig_autos = px.bar(x=modelos_barras_autos, y=cotizaciones_barras_autos, labels={'x': 'Modelo Auto', 'y': 'Total de Cotizaciones Autos'})
+
+    # Obtener cotizaciones de autos por mes en MySQL
+    cotizaciones_por_mes_autos = (
+        db.session.query(
+            db.func.MONTH(tbl_coti_autos.fecha_coti).label('mes'),
+            db.func.count(tbl_coti_autos.id_coti_auto).label('total_cotizaciones')
+        )
+        .group_by('mes')
+        .order_by('mes')
+        .all()
+    )
+
+    # Crear datos para la gráfica de pastel de autos
+    meses_autos = [calendar.month_name[cotizacion.mes] for cotizacion in cotizaciones_por_mes_autos]
+
+    # Obtener el nombre del mes actual en español
+    nombre_mes_actual_autos = calendar.month_name[datetime.now().month]
+
+    # Crear gráfica de pastel para autos con etiquetas personalizadas
+    fig_pastel_autos = px.pie(
+        names=meses_autos,
+        values=[cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_mes_autos],
+        title=f'Distribución de Cotizaciones de Autos de {nombre_mes_actual_autos}'
+    )
+
+    # Configurar la visualización para ocultar la barra de herramientas
+    graph_autos = fig_autos.to_html(full_html=False, config={'displayModeBar': False})
+    graph_pastel_autos = fig_pastel_autos.to_html(full_html=False, config={'displayModeBar': False})
+
+    # Obtener cotizaciones de motos por día en MySQL
+    cotizaciones_por_dia_motos = (
+        db.session.query(
+            db.func.DATE(tbl_coti_motos.fecha_coti).label('dia'),
+            db.func.count(tbl_coti_motos.id_coti_moto).label('total_cotizaciones')
+        )
+        .group_by('dia')
+        .order_by('dia')
+        .all()
+    )
+
+    # Crear datos para la gráfica de líneas de motos
+    dias_motos = [cotizacion.dia for cotizacion in cotizaciones_por_dia_motos]
+    total_cotizaciones_por_dia_motos = [cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_dia_motos]
+
+    # Crear gráfica de líneas para el total de cotizaciones de motos por día
+    fig_lineas_motos = px.line(x=dias_motos, y=total_cotizaciones_por_dia_motos, labels={'x': 'Día', 'y': 'Total de Cotizaciones por Día'})
+
+    # Configurar la visualización para permitir la navegación
+    fig_lineas_motos.update_layout(xaxis=dict(type='category', fixedrange=True), yaxis=dict(fixedrange=True))
+
+    # Configurar la visualización para ocultar la barra de herramientas
+    graph_lineas_motos = fig_lineas_motos.to_html(full_html=False, config={'displayModeBar': False})
 
     # Obtener modelos cotizados de motos
     modelos_cotizados_motos = (
@@ -600,56 +734,46 @@ def graficas():
         .all()
     )
 
-    # Crear datos para la gráfica de autos
-    modelos_autos = [modelo[0] for modelo in modelos_cotizados_autos]
-    cotizaciones_autos = [modelo[1] for modelo in modelos_cotizados_autos]
-
-    # Limitar a los 4 valores más altos solo para la gráfica de barras
-    modelos_barras = modelos_autos[:4]
-    cotizaciones_barras = cotizaciones_autos[:4]
-
-    # Crear datos para la gráfica de motos
+    # Crear datos para la gráfica de barras de motos
     modelos_motos = [modelo[0] for modelo in modelos_cotizados_motos]
     cotizaciones_motos = [modelo[1] for modelo in modelos_cotizados_motos]
 
-    # Crear gráfica de barras para autos
-    fig_autos = px.bar(x=modelos_barras, y=cotizaciones_barras, labels={'x': 'Modelo Auto', 'y': 'Total de Cotizaciones Autos'})
+    # Limitar a los 4 valores más altos solo para la gráfica de barras
+    modelos_barras_motos = modelos_motos[:4]
+    cotizaciones_barras_motos = cotizaciones_motos[:4]
 
     # Crear gráfica de barras para motos
-    fig_motos = px.bar(x=modelos_motos, y=cotizaciones_motos, labels={'x': 'Modelo Moto', 'y': 'Total de Cotizaciones Motos'})
+    fig_motos = px.bar(x=modelos_barras_motos, y=cotizaciones_barras_motos, labels={'x': 'Modelo Moto', 'y': 'Total de Cotizaciones Motos'})
 
-    # Obtener cotizaciones de autos por mes en MySQL
-    cotizaciones_por_mes = (
+    # Obtener cotizaciones de motos por mes en MySQL
+    cotizaciones_por_mes_motos = (
         db.session.query(
-            db.func.MONTH(tbl_coti_autos.fecha_coti).label('mes'),
-            db.func.count(tbl_coti_autos.id_coti_auto).label('total_cotizaciones')
+            db.func.MONTH(tbl_coti_motos.fecha_coti).label('mes'),
+            db.func.count(tbl_coti_motos.id_coti_moto).label('total_cotizaciones')
         )
         .group_by('mes')
         .order_by('mes')
         .all()
     )
 
-    # Crear datos para la gráfica de pastel de autos
-    meses = [calendar.month_name[cotizacion.mes] for cotizacion in cotizaciones_por_mes]
-    total_cotizaciones_por_mes = [cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_mes]
+    # Crear datos para la gráfica de pastel de motos
+    meses_motos = [calendar.month_name[cotizacion.mes] for cotizacion in cotizaciones_por_mes_motos]
 
     # Obtener el nombre del mes actual en español
-    nombre_mes_actual = calendar.month_name[datetime.now().month]
+    nombre_mes_actual_motos = calendar.month_name[datetime.now().month]
 
-    # Crear gráfica de pastel para autos con etiquetas personalizadas
-    fig_pastel_autos = px.pie(
-        names=meses,
-        values=total_cotizaciones_por_mes,
-        title=f'Distribución de Cotizaciones de Autos de {nombre_mes_actual}'
+    # Crear gráfica de pastel para motos con etiquetas personalizadas
+    fig_pastel_motos = px.pie(
+        names=meses_motos,
+        values=[cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_mes_motos],
+        title=f'Distribución de Cotizaciones de Motos de {nombre_mes_actual_motos}'
     )
 
     # Configurar la visualización para ocultar la barra de herramientas
-    graph_autos = fig_autos.to_html(full_html=False, config={'displayModeBar': False})
     graph_motos = fig_motos.to_html(full_html=False, config={'displayModeBar': False})
-    graph_pastel_autos = fig_pastel_autos.to_html(full_html=False, config={'displayModeBar': False})
+    graph_pastel_motos = fig_pastel_motos.to_html(full_html=False, config={'displayModeBar': False})
 
-    return render_template('admin/graficas.html', admin=admin, graph_lineas=graph_lineas, graph_autos=graph_autos, graph_motos=graph_motos, graph_pastel_autos=graph_pastel_autos)
-
+    return render_template('admin/graficas.html', admin=admin, graph_lineas_autos=graph_lineas_autos, graph_autos=graph_autos, graph_pastel_autos=graph_pastel_autos, graph_lineas_motos=graph_lineas_motos, graph_motos=graph_motos, graph_pastel_motos=graph_pastel_motos)
 
 
 @app.route('/get_cotizaciones', methods=['GET'])
@@ -666,6 +790,8 @@ def get_cotizaciones():
     ]
 
     return jsonify(data)
+
+#Gestion de administradores
 if __name__ == '__main__':
     app.secret_key = 'jfjfi029832rninf 2infiwenf2j ienfkowenf92h okenfi20'
     app.run("0.0.0.0", 8080, debug=True)

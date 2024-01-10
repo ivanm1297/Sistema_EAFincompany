@@ -5,18 +5,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const pagination = document.getElementById('pagination');
 
     let currentPage = 1;
-    let previousPage = 1; // Almacena la página antes de realizar la búsqueda
-    const recordsPerPage = 4; // Ajusta según tus necesidades
+    let previousPage = 1;
+    const recordsPerPage = 4;
     let filteredRows = [];
 
-    // Función para mostrar los registros en la tabla después de la búsqueda
     function displayFilteredRecords(startIndex, endIndex) {
         for (let i = 0; i < filteredRows.length; i++) {
             filteredRows[i].style.display = i >= startIndex && i < endIndex ? '' : 'none';
         }
     }
 
-    // Función para actualizar la paginación después de la búsqueda
     function updateFilteredPagination() {
         const pageCount = Math.ceil(filteredRows.length / recordsPerPage);
 
@@ -49,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function () {
         displayFilteredRecords((currentPage - 1) * recordsPerPage, currentPage * recordsPerPage);
     }
 
-    // Función para ir a la página anterior después de la búsqueda
     function goToPreviousFilteredPage() {
         if (currentPage > 1) {
             currentPage--;
@@ -57,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Función para ir a la página siguiente después de la búsqueda
     function goToNextFilteredPage() {
         const pageCount = Math.ceil(filteredRows.length / recordsPerPage);
 
@@ -67,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Función para filtrar los registros según la búsqueda
     function filterRecords() {
         const textoBusqueda = inputBusqueda.value.toLowerCase();
         filteredRows = [];
@@ -83,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Al realizar una búsqueda, actualizamos la paginación sin cambiar la página actual
         if (textoBusqueda !== '') {
             previousPage = currentPage;
             currentPage = 1;
@@ -91,25 +85,21 @@ document.addEventListener('DOMContentLoaded', function () {
             currentPage = previousPage;
         }
 
-        // Actualiza el historial del navegador al cambiar de página
         history.replaceState({ page: currentPage }, null, `?page=${currentPage}`);
 
         updateFilteredPagination();
     }
 
-    // Evento para la búsqueda
     inputBusqueda.addEventListener('input', function () {
         filterRecords();
     });
 
-    // Función para mostrar los registros en la tabla
     function displayRecords(startIndex, endIndex) {
         for (let i = 0; i < tablaRegistros.length; i++) {
             tablaRegistros[i].style.display = i >= startIndex && i < endIndex ? '' : 'none';
         }
     }
 
-    // Función para calcular el número total de páginas
     function setupPagination() {
         const pageCount = Math.ceil(tablaRegistros.length / recordsPerPage);
 
@@ -142,7 +132,6 @@ document.addEventListener('DOMContentLoaded', function () {
         displayRecords((currentPage - 1) * recordsPerPage, currentPage * recordsPerPage);
     }
 
-    // Función para actualizar el paginado y mostrar los registros correspondientes
     function updatePagination() {
         const pageCount = Math.ceil(tablaRegistros.length / recordsPerPage);
 
@@ -159,7 +148,6 @@ document.addEventListener('DOMContentLoaded', function () {
         nextBtn.style.display = currentPage < pageCount ? '' : 'none';
     }
 
-    // Función para actualizar estilos de paginado al cambiar de página
     function updatePaginationStyles() {
         const items = pagination.getElementsByClassName('page-item');
 
@@ -170,7 +158,6 @@ document.addEventListener('DOMContentLoaded', function () {
         items[currentPage - 1].classList.add('active');
     }
 
-    // Función para ir a la página anterior
     function goToPreviousPage() {
         if (currentPage > 1) {
             currentPage--;
@@ -178,7 +165,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Función para ir a la página siguiente
     function goToNextPage() {
         const pageCount = Math.ceil(tablaRegistros.length / recordsPerPage);
 
@@ -188,7 +174,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Manejar el evento "popstate" para cambiar de página al usar los botones de retroceso/navegación del navegador
     window.addEventListener('popstate', function (event) {
         if (event.state && event.state.page) {
             currentPage = event.state.page;
@@ -198,11 +183,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Inicializar el paginado y la búsqueda
     setupPagination();
-    updatePagination(); // Agregado para asegurar que se muestren solo los primeros registros al cargar la página
+    updatePagination();
+
+    // Funcionalidad para el botón de imprimir
+    document.getElementById("botonImprimir").addEventListener("click", function () {
+        // Mostrar todos los registros antes de imprimir
+        displayAllRecords();
+        window.print();
+
+        // Restaurar la paginación después de imprimir
+        updatePagination();
+    });
+
+    // Función para mostrar todos los registros
+    function displayAllRecords() {
+        for (let i = 0; i < tablaRegistros.length; i++) {
+            tablaRegistros[i].style.display = '';
+        }
+    }
 });
 
-//Tabla cotizaciones
 
+//Tabla cotizaciones
 document.addEventListener('DOMContentLoaded', function () {
     const inputBusqueda = document.getElementById('busqueda_automatica');
     const tablaRegistros = document.getElementById('tabla_cotizaciones').querySelectorAll('tbody tr');
@@ -210,18 +212,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const pagination = document.getElementById('pagination');
 
     let currentPage = 1;
-    let previousPage = 1; // Almacena la página antes de realizar la búsqueda
-    const recordsPerPage = 8; // Ajusta según tus necesidades
+    let previousPage = 1;
+    const recordsPerPage = 8;
     let filteredRows = [];
 
-    // Función para mostrar los registros en la tabla después de la búsqueda
     function displayFilteredRecords(startIndex, endIndex) {
         for (let i = 0; i < filteredRows.length; i++) {
             filteredRows[i].style.display = i >= startIndex && i < endIndex ? '' : 'none';
         }
     }
 
-    // Función para actualizar la paginación después de la búsqueda
     function updateFilteredPagination() {
         const pageCount = Math.ceil(filteredRows.length / recordsPerPage);
 
@@ -254,7 +254,6 @@ document.addEventListener('DOMContentLoaded', function () {
         displayFilteredRecords((currentPage - 1) * recordsPerPage, currentPage * recordsPerPage);
     }
 
-    // Función para ir a la página anterior después de la búsqueda
     function goToPreviousFilteredPage() {
         if (currentPage > 1) {
             currentPage--;
@@ -262,7 +261,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Función para ir a la página siguiente después de la búsqueda
     function goToNextFilteredPage() {
         const pageCount = Math.ceil(filteredRows.length / recordsPerPage);
 
@@ -272,7 +270,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Función para filtrar los registros según la búsqueda
     function filterRecords() {
         const textoBusqueda = inputBusqueda.value.toLowerCase();
         filteredRows = [];
@@ -288,7 +285,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Al realizar una búsqueda, actualizamos la paginación sin cambiar la página actual
         if (textoBusqueda !== '') {
             previousPage = currentPage;
             currentPage = 1;
@@ -296,25 +292,21 @@ document.addEventListener('DOMContentLoaded', function () {
             currentPage = previousPage;
         }
 
-        // Actualiza el historial del navegador al cambiar de página
         history.replaceState({ page: currentPage }, null, `?page=${currentPage}`);
 
         updateFilteredPagination();
     }
 
-    // Evento para la búsqueda
     inputBusqueda.addEventListener('input', function () {
         filterRecords();
     });
 
-    // Función para mostrar los registros en la tabla
     function displayRecords(startIndex, endIndex) {
         for (let i = 0; i < tablaRegistros.length; i++) {
             tablaRegistros[i].style.display = i >= startIndex && i < endIndex ? '' : 'none';
         }
     }
 
-    // Función para calcular el número total de páginas
     function setupPagination() {
         const pageCount = Math.ceil(tablaRegistros.length / recordsPerPage);
 
@@ -347,7 +339,6 @@ document.addEventListener('DOMContentLoaded', function () {
         displayRecords((currentPage - 1) * recordsPerPage, currentPage * recordsPerPage);
     }
 
-    // Función para actualizar el paginado y mostrar los registros correspondientes
     function updatePagination() {
         const pageCount = Math.ceil(tablaRegistros.length / recordsPerPage);
 
@@ -364,7 +355,6 @@ document.addEventListener('DOMContentLoaded', function () {
         nextBtn.style.display = currentPage < pageCount ? '' : 'none';
     }
 
-    // Función para actualizar estilos de paginado al cambiar de página
     function updatePaginationStyles() {
         const items = pagination.getElementsByClassName('page-item');
 
@@ -375,7 +365,6 @@ document.addEventListener('DOMContentLoaded', function () {
         items[currentPage - 1].classList.add('active');
     }
 
-    // Función para ir a la página anterior
     function goToPreviousPage() {
         if (currentPage > 1) {
             currentPage--;
@@ -383,7 +372,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Función para ir a la página siguiente
     function goToNextPage() {
         const pageCount = Math.ceil(tablaRegistros.length / recordsPerPage);
 
@@ -393,7 +381,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Manejar el evento "popstate" para cambiar de página al usar los botones de retroceso/navegación del navegador
     window.addEventListener('popstate', function (event) {
         if (event.state && event.state.page) {
             currentPage = event.state.page;
@@ -404,4 +391,37 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inicializar el paginado y la búsqueda
     setupPagination();
     updatePagination(); // Agregado para asegurar que se muestren solo los primeros registros al cargar la página
+
+    // Funcionalidad para el botón de imprimir
+    document.getElementById("botonImprimir").addEventListener("click", function () {
+        // Filtrar los registros por semana antes de imprimir
+        filterRecordsByWeek();
+        
+        // Mostrar todos los registros después de imprimir
+        window.print();
+        
+        // Restaurar la paginación y mostrar los registros originales
+        updatePagination();
+    });
+    
+    // Función para filtrar registros por semana
+    function filterRecordsByWeek() {
+        const today = moment(); // Obtener la fecha actual
+        const startOfWeek = today.clone().startOf('isoWeek'); // Inicio de la semana actual
+        const endOfWeek = today.clone().endOf('isoWeek'); // Fin de la semana actual
+    
+        for (let i = 0; i < tablaRegistros.length; i++) {
+            const registro = tablaRegistros[i];
+            const fechaTexto = registro.cells[7].textContent; // Ajustar el índice según la posición de la fecha en tu fila
+            const fechaCotizacion = moment(fechaTexto, 'YYYY-MM-DD'); // Ajustar el formato según tus datos
+    
+            if (fechaCotizacion.isBetween(startOfWeek, endOfWeek, null, '[]')) {
+                registro.style.display = ''; // Mostrar registros de la semana
+            } else {
+                registro.style.display = 'none'; // Ocultar registros fuera de la semana
+            }
+        }
+    }
+    
 });
+

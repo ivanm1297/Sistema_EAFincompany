@@ -43,6 +43,8 @@
 
 <div class="container mx-5 my-3 d-flex justify-content-between align-items-center">
     <input type="text" name="busqueda_automatica" id="busqueda_automatica" placeholder="¿Qué Moto Buscas?" style="border: 2px solid #111; text-align:center; border-radius: 5px;">
+    <button id="botonImprimir" class="btn btn-success"><i class="fa-solid fa-file-pdf" style="font-size: 24px;"></i></button>
+
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarMotoModal">
         Agregar Moto
     </button>
@@ -100,15 +102,15 @@
                 <td style="font-size: 13px;">${{ catalogo.precio_inicial }}</td>
                 <td style="font-size: 13px;">${{catalogo.precio_lista }}</td>
                 <td>
-                    <a class="btn btn-outline-danger" href="{{ url_for('eliminar_auto', id_auto=catalogo.id_auto) }}"
+                    <a class="btn btn-outline-danger" href="{{ url_for('eliminar_moto', id_moto=catalogo.id_moto) }}"
                         onclick="return confirm('¿Estás seguro de que deseas eliminar este auto?')" style="border-radius: 5px;">
                         <i class="fa fa-trash"></i>
                     </a>
-                    <a class="btn btn-outline-success" data-toggle="modal" data-target="#actAutoModal{{catalogo.id_auto}}"
+                    <a class="btn btn-outline-success" data-toggle="modal" data-target="#actMotosModal{{catalogo.id_moto}}"
                         style="border-radius: 5px;">
                         <i class="fa fa-pen-to-square"></i>
                     </a>
-                    {% include 'admin/catalogo_autos/act_auto.html' %}
+                    {% include 'admin/catalogo_motos/act_motos.html' %}
                 </td>
             </tr>
             {% endfor %}

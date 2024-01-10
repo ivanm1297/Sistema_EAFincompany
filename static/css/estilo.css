@@ -341,14 +341,15 @@ footer a:hover {
 }
 
 .img-fluid {
-
+    
     border-radius: 20px;
 }
 
 #mainImage img {
-    width: 100%;
+    width: 90%;
     height: 300px;
     border-radius: 10px;
+    
 }
 
 .descripcion {
@@ -447,3 +448,4 @@ select, option {
     font-size: 14px; /* Tamaño de fuente reducido */
     height: 10px;
 }
+

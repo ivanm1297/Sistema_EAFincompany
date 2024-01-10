@@ -1,25 +1,20 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E&A Company</title>
+    <title>E&A Fincompany</title>
     <link rel="shortcut icon" href="/static/image/logo_meta.ico" type="image/x-icon">
-    <title>Pagina principal</title>
     <link rel="stylesheet" href="/static/css/estilo.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!--<link rel="stylesheet" href="/static/css/bootstrap.css">-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-
 </head>
 
 <body>
- 
     <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
         <a class="navbar-brand ms-4" href="#"><img src="/static/image/Logo_E&A_Fincompany.png" class="logo" alt="Logo"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -40,27 +35,27 @@
                         Financiamiento
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="{{url_for('financiamiento')}}">Carros</a>
-                        <a class="dropdown-item" href="#">Motos</a>
+                        <a class="dropdown-item" href="{{url_for('financiamiento')}}">Automoviles</a>
+                        <a class="dropdown-item" href="#">Motocicletas</a>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('gestion')}}">Galeria</a>
                 </li>
             </ul>
         </div>
     </nav>
 
+    {% block contenido %}
+    {% endblock %}
 
-    {%block contenido%}
-
-
-    {%endblock%}
     <footer class="border-top p-3 " style=" margin-top:12em;">
         <div class="container" >
             <div class="row">
                 <div class="col-sm-4">
                     <p class="titulo_footer">Contactos</p>
-                    <p><a
-                            href="https://web.whatsapp.com/send?phone=+52 1 729 862 1827&text=Hola,%20podria%20proporcionarme%20más%20informacion%20por%20favor%20!%20Gracias%20¡" target="_blank">+52
-                            7298621827</a></p>
+                    <p><a href="https://wa.me/527298621827?text=Hola,%20¿podría%20proporcionarme%20más%20información%20por%20favor?%20¡Gracias!" target="_blank">+52 7298621827</a>
+                    </p>
                     <p><a href="mailto:atencionaclientes@eacompany.online?Subject=Infomacion%20de%20los%20financiamientos.">atencionaclientes@eacompany.online</a></p>
 
                 </div>
@@ -84,17 +79,11 @@
         </div>
     </footer>
    
+
     <script src="/static/js/calcular.js"></script>
     <script src="/static/js/funcionts.js"></script>
     <script src="{{url_for('static', filename='/js/sweetalert2@11.js')}}"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/b33479a588.js" crossorigin="anonymous"></script>
-
-    <!--<script src="/static/js/bootstrap.bundle.js"></script>-->
 </body>
 
 </html>

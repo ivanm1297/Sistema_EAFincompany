@@ -2,100 +2,146 @@
 
 {% block administrador %}
 <style>
-/* Estilos personalizados para las casillas del paginado */
-.pagination .page-item .page-link {
-    background-color: red;
-    color: white;
-    margin-left: 2px;
-    margin-right: 2px;
-    height: 33px;
-}
-
-.pagination .page-item.active .page-link {
-    background-color: white;
-    color: red;
-    border: 1px solid red;
-    margin-right: 2px;
-    height: 33px;
-}
-
-.nav-btn {
-    height: 33px;
-    background-color: red;
-    color: white;
-}
-
-/* Estilos para el contenedor que engloba el menú y la tabla */
-.content-container {
-    padding-left: 60px; /* Ajusta este valor según el ancho de tu menú */
-    margin-top: 20px; /* Ajusta este valor según el espacio que desees entre el menú y la tabla */
-}
-
-/* Estilos para hacer la tabla responsiva */
-@media screen and (max-width: 767px) {
-    .content-container {
-        padding-left: 50%; /* La mitad del ancho de la pantalla */
-        margin-top: 20px; /* Ajusta este valor según el espacio que desees entre el menú y la tabla */
+    /* Estilos personalizados para las casillas del paginado */
+    .pagination .page-item .page-link {
+        background-color: red;
+        color: white;
+        margin-left: 2px;
+        margin-right: 2px;
+        height: 33px;
     }
-}
+
+    .pagination .page-item.active .page-link {
+        background-color: white;
+        color: red;
+        border: 1px solid red;
+        margin-right: 2px;
+        height: 33px;
+    }
+
+    .nav-btn {
+        height: 33px;
+        background-color: red;
+        color: white;
+    }
+
+    /* Estilos para el contenedor que engloba el menú y la tabla */
+    .content-container {
+        padding-left: 60px;
+        /* Ajusta este valor según el ancho de tu menú */
+        margin-top: 20px;
+        /* Ajusta este valor según el espacio que desees entre el menú y la tabla */
+    }
+
+    /* Estilos para hacer la tabla responsiva */
+    @media screen and (max-width: 767px) {
+        .content-container {
+            padding-left: 50%;
+            /* La mitad del ancho de la pantalla */
+            margin-top: 20px;
+            /* Ajusta este valor según el espacio que desees entre el menú y la tabla */
+        }
+    }
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+
+        #tabla_cotizaciones,
+        #tabla_cotizaciones * {
+            visibility: visible;
+        }
+
+        #tabla_cotizaciones {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #570606;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        #tabla_cotizaciones tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #tabla_cotizaciones tbody tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+    }
 </style>
 <div class="container  mx-5 mt-4">
     <div class="d-flex align-items-center justify-content-center">
-      <div class="titulo_tabla mb-3">
-        <h3>Tabla de Cotizaciones de Autos</h3>
+        <div class="titulo_tabla mb-3">
+            <h3>Tabla de Cotizaciones de Autos</h3>
+        </div>
+    </div>
+</div>
+
+<div class="container mx-5">
+    <div class="row">
+      <div class="col-md-6">
+        <input type="text" name="busqueda_automatica" id="busqueda_automatica" class="form-control" placeholder="¿Qué Auto Buscas?" style="border-radius: 5px; margin-left:5.5em;">
+      </div>
+      <div class="col-md-6 mt-2 mt-md-0 text-right">
+        <button id="botonImprimir" class="btn btn-success"><i class="fa-solid fa-print" style="font-size: 24px;"></i></button>
       </div>
     </div>
   </div>
-<div class="container mx-5">
-    <input type="text" name="busqueda_automatica" id="busqueda_automatica" placeholder="¿Qué Moto Buscas?" style="border: 2px solid #111; text-align:center; border-radius: 5px;">
-</div>
 
+<div id="miLogo" >
+    <img src="/static/image/Logo_E&A_Fincompany.png" alt="Logo de la empresa" width="150" height="100">
+</div>
+<div id="rep_coti">
+    <h3 id="rep_coti">Reporte cotizaciones por semana</h3>
+</div>
 <!-- Contenedor que engloba el menú y la tabla con padding izquierdo -->
 <div class="container d-flex align-items-center justify-content-center content-container">
     <!-- Menú de navegación vertical -->
     <!-- Agrega aquí el código de tu menú de navegación vertical -->
-
     <!-- Tu tabla -->
     <div class="table-container">
         <table id="tabla_cotizaciones" class="table">
-        <!-- Encabezados de la tabla -->
-        <thead style="background-color: #570606;">
-            <tr>
-                <th style="color: #fff; font-size:14px;">Modelo</th>
-                <th style="color: #fff; font-size:14px;">Año</th>
-                <th style="color: #fff; font-size:14px;">Nombre del cliente</th>
-                <th style="color: #fff; font-size:14px;">Apellido Paterno</th>
-                <th style="color: #fff; font-size:14px;">Apellido Materno</th>
-                <th style="color: #fff; font-size:14px;">Telefono</th>
-                <th style="color: #fff; font-size:14px;">Correo</th>
-                <th style="color: #fff; font-size:14px;">Fecha de la cotizacion</th>
-                <th style="color: #fff; font-size:14px;">Opcion</th>
-                
-            </tr>
-        </thead>
-        <!-- Cuerpo de la tabla -->
-        <tbody>
-            {% for cotizacion_auto in cotizacion_auto %}
-            <tr>
-                <td style="font-size: 13px;">{{ cotizacion_auto.modelo_coti_auto }}</td>
-                <td style="font-size: 13px;">{{ cotizacion_auto.año_coti_auto }}</td>
-                <td style="font-size: 13px;">{{ cotizacion_auto.nombre_coti_auto }}</td>        
-                <td style="font-size: 13px;">{{ cotizacion_auto.ap_coti_auto }}</td>
-                <td style="font-size: 13px;">{{ cotizacion_auto.am_coti_auto }}</td>
-                <td style="font-size: 13px;">{{ cotizacion_auto.celular_coti_auto }}</td>
-                <td style="font-size: 13px;">{{ cotizacion_auto.correo_coti_auto }}</td>
-                <td style="font-size: 13px;">{{ cotizacion_auto.fecha_coti }}</td>
-                <td style="font-size: 13px;"> <a class="btn btn-outline-danger" href="{{ url_for('eliminar_cotizacion_auto', id_coti_auto=cotizacion_auto.id_coti_auto) }}"
-                    onclick="return confirm('¿Estás seguro de que deseas eliminar esta cotizacion?')" style="border-radius: 5px;">
-                    <i class="fa fa-trash"></i>
-                </a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            <!-- Encabezados de la tabla -->
+            <thead style="background-color: #570606;">
+                <tr>
+                    <th style="color: #fff; font-size:14px;">Modelo</th>
+                    <th style="color: #fff; font-size:14px;">Año</th>
+                    <th style="color: #fff; font-size:14px;">Nombre del cliente</th>
+                    <th style="color: #fff; font-size:14px;">Apellido Paterno</th>
+                    <th style="color: #fff; font-size:14px;">Apellido Materno</th>
+                    <th style="color: #fff; font-size:14px;">Telefono</th>
+                    <th style="color: #fff; font-size:14px;">Correo</th>
+                    <th style="color: #fff; font-size:14px;">Fecha de la cotizacion</th>
+                    <th style="color: #fff; font-size:14px;" class="d-print-none">Opcion</th>
+
+                </tr>
+            </thead>
+            <!-- Cuerpo de la tabla -->
+            <tbody>
+                {% for cotizacion_auto in cotizacion_auto %}
+                <tr>
+                    <td style="font-size: 13px;">{{ cotizacion_auto.modelo_coti_auto }}</td>
+                    <td style="font-size: 13px;">{{ cotizacion_auto.año_coti_auto }}</td>
+                    <td style="font-size: 13px;">{{ cotizacion_auto.nombre_coti_auto }}</td>
+                    <td style="font-size: 13px;">{{ cotizacion_auto.ap_coti_auto }}</td>
+                    <td style="font-size: 13px;">{{ cotizacion_auto.am_coti_auto }}</td>
+                    <td style="font-size: 13px;">{{ cotizacion_auto.celular_coti_auto }}</td>
+                    <td style="font-size: 13px;">{{ cotizacion_auto.correo_coti_auto }}</td>
+                    <td style="font-size: 13px;">{{ cotizacion_auto.fecha_coti }}</td>
+                    <td style="font-size: 13px;" class="d-print-none"> <a class="btn btn-outline-danger"
+                            href="{{ url_for('eliminar_cotizacion_auto', id_coti_auto=cotizacion_auto.id_coti_auto) }}"
+                            onclick="return confirm('¿Estás seguro de que deseas eliminar esta cotizacion?')"
+                            style="border-radius: 5px;">
+                            <i class="fa fa-trash"></i>
+                        </a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
-    
+
 
 </div>
 <!-- Mensaje de "registro no encontrado" -->
@@ -105,13 +151,13 @@
 <div class="container d-flex justify-content-center ">
 
     <div class="d-flex paginado">
-        <button class="btn nav-btn me-1" id="previousBtn" ><i class="fa-solid fa-backward"></i></button>
+        <button class="btn nav-btn me-1" id="previousBtn"><i class="fa-solid fa-backward"></i></button>
 
         <nav aria-label="Page navigation">
 
             <ul class="pagination" id="pagination" style="margin-right: 3px;"></ul>
         </nav>
-        <button class="btn nav-btn ms-1" id="nextBtn" ><i class="fa-solid fa-forward"></i></button>
+        <button class="btn nav-btn ms-1" id="nextBtn"><i class="fa-solid fa-forward"></i></button>
     </div>
 </div>
 

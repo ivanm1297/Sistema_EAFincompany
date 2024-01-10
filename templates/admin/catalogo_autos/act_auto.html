@@ -1,20 +1,19 @@
-<!-- Modal para agregar auto -->
 <div class="modal" id="actAutoModal{{catalogo.id_auto}}">
     <div class="modal-dialog">
         <div class="modal-content">
 
-            <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Actualizar</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
-            <!-- Modal Body - Formulario para agregar auto -->
             <div class="modal-body">
-                <form action="{{url_for('actualizar_auto',id_auto=catalogo.id_auto)}}" method="post" enctype="multipart/form-data">
+                <form action="{{url_for('actualizar_auto',id_auto=catalogo.id_auto)}}" method="post"
+                    enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="act_modelo_auto">Modelo:</label>
-                        <input type="text" class="form-control" id="act_modelo_auto" name="act_modelo_auto" value="{{catalogo.modelo_auto}}">
+                        <input type="text" class="form-control" id="act_modelo_auto" name="act_modelo_auto"
+                            value="{{catalogo.modelo_auto}}">
                     </div>
                     <hr>
                     <div class="form-group">
@@ -31,58 +30,73 @@
                             <option value="2022">2022</option>
                         </select>
                         <label for="act_km_auto" class="titulos">Km:</label>
-                        <input type="text" class="form-control" id="act_km_auto" name="act_km_auto" placeholder="{{catalogo.km_auto}}">
+                        <input type="text" class="form-control" id="act_km_auto" name="act_km_auto"
+                            placeholder="{{catalogo.km_auto}}">
                     </div>
                     <div class="form-group">
-                        
+
                     </div>
                     <div class="form-group">
                         <label for="gasolina">Gasolina:</label>
                         <div class="radio form-group">
-                            <input type="radio" name="act_gasolina" id="act_magna{{catalogo.id_auto}}" value="Magna" {% if catalogo.gasolina == 'Magna' %} checked {% endif %}>
+                            <input type="radio" name="act_gasolina" id="act_magna{{catalogo.id_auto}}" value="Magna" {%
+                                if catalogo.gasolina=='Magna' %} checked {% endif %}>
                             <label for="act_magna{{catalogo.id_auto}}">Magna</label>
-                        
-                            <input type="radio" name="act_gasolina" id="act_premium{{catalogo.id_auto}}" value="Premium" {% if catalogo.gasolina == 'Premium' %} checked {% endif %}>
+
+                            <input type="radio" name="act_gasolina" id="act_premium{{catalogo.id_auto}}" value="Premium"
+                                {% if catalogo.gasolina=='Premium' %} checked {% endif %}>
                             <label for="act_premium{{catalogo.id_auto}}">Premium</label>
-                        
-                            <input type="radio" name="act_gasolina" id="act_disel{{catalogo.id_auto}}" value="Disel" {% if catalogo.gasolina == 'Disel' %} checked {% endif %}>
+
+                            <input type="radio" name="act_gasolina" id="act_disel{{catalogo.id_auto}}" value="Disel" {%
+                                if catalogo.gasolina=='Disel' %} checked {% endif %}>
                             <label for="act_disel{{catalogo.id_auto}}">Disel</label>
                         </div>
                     </div>
                     <label for="transmision">Tipo de Transmisión:</label>
-                        <div class="radio form-group">
-                            <input type="radio" name="act_transmision" id="act_estandar{{catalogo.id_auto}}" value="Estandar" {% if catalogo.transmision == 'Estandar' %} checked {% endif %}>
-                            <label for="act_estandar{{catalogo.id_auto}}">Estandar</label>
-                        
-                            <input type="radio" name="act_transmision" id="act_automatico{{catalogo.id_auto}}" value="Automatico" {% if catalogo.transmision == 'Automatico' %} checked {% endif %}>
-                            <label for="act_automatico{{catalogo.id_auto}}">Automatico</label>
-                        
-                            <input type="radio" name="act_transmision" id="act_hibrido{{catalogo.id_auto}}" value="Hibrido" {% if catalogo.transmision == 'Hibrido' %} checked {% endif %}>
-                            <label for="act_hibrido{{catalogo.id_auto}}">Hibrido</label>
-                        </div>
-                        
-                        <!--<label for="transmision">Transimision:</label>
-                        <input type="text" class="form-control" id="transmision" name="transmision" >-->
+                    <div class="radio form-group">
+                        <input type="radio" name="act_transmision" id="act_estandar{{catalogo.id_auto}}"
+                            value="Estandar" {% if catalogo.transmision=='Estandar' %} checked {% endif %}>
+                        <label for="act_estandar{{catalogo.id_auto}}">Estandar</label>
+
+                        <input type="radio" name="act_transmision" id="act_automatico{{catalogo.id_auto}}"
+                            value="Automatico" {% if catalogo.transmision=='Automatico' %} checked {% endif %}>
+                        <label for="act_automatico{{catalogo.id_auto}}">Automatico</label>
+
+                        <input type="radio" name="act_transmision" id="act_hibrido{{catalogo.id_auto}}" value="Hibrido"
+                            {% if catalogo.transmision=='Hibrido' %} checked {% endif %}>
+                        <label for="act_hibrido{{catalogo.id_auto}}">Hibrido</label>
+                    </div>
                     <div class="form-group">
                         <label for="act_marca">Marca:</label>
-                        <input type="text" class="form-control" id="act_marca" name="act_marca" placeholder="{{catalogo.marca}}">
+                        <input type="text" class="form-control" id="act_marca" name="act_marca"
+                            placeholder="{{catalogo.marca}}">
                         <div class="form-group">
                             <label for="act_descripcion">Descripcion:</label>
-                            <textarea name="act_descripcion" class="form-control" id="act_descripcion" placeholder="{{catalogo.descripcion}}"></textarea>
+                            <textarea name="act_descripcion" class="form-control" id="act_descripcion"
+                                placeholder="{{catalogo.descripcion}}"></textarea>
                         </div>
                     </div>
-                    
                     <div class="form-group">
-                        
+                        <label for="act_precio_lista">Precio en lista:</label>
+                        <input type="number" class="form-control" id="act_precio_lista" name="act_precio_lista"
+                            placeholder="{{catalogo.precio_lista}}">
+                        <label for="act_pago_inicial">Pago Inicial:</label>
+                        <input type="number" class="form-control" id="act_pago_inicial" name="act_pago_inicial"
+                            placeholder="{{catalogo.pago_inicial}}">
+                    </div>
+
+                    <div class="form-group">
+
                         <label for="act_imagen">Imagen:</label>
-                        <input type="file" id="act_imagen" name="act_imagen" multiple onchange="handleImageSelection(event)">
+                        <input type="file" id="act_imagen" name="act_imagen" multiple
+                            onchange="handleImageSelection(event)">
                         <div id="imagenPreview"></div>
                         <textarea id="imageList" name="imageList" style="display: none;"></textarea>
-                        
+
                     </div>
                     <button type="submit" class="btn btn-primary">Actualizar</button>
 
-                    
+
             </div>
 
             </form>

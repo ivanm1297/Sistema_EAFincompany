@@ -15,7 +15,7 @@
       </div>
       <div class="col-md-6 shadow lg">
           <!-- Gráfico de líneas -->
-          {{ graph_lineas | safe }}
+          {{ graph_lineas_autos | safe }}
       </div>
   </div>
 </div>
@@ -26,6 +26,19 @@
 <div class="container mt-2">
   {{ graph_motos|safe }}  <!-- Usa |safe para renderizar HTML sin escapar -->
   {{graph_lineas|safe}}
+</div>
+
+<div class="container mt-3">
+  <div class="graficas row">
+      <div class="col-md-6 shadow-lg">
+          <!-- Gráfico de pastel de autos -->
+          {{ graph_pastel_motos | safe }}
+      </div>
+      <div class="col-md-6 shadow lg">
+          <!-- Gráfico de líneas -->
+          {{ graph_lineas_motos | safe }}
+      </div>
+  </div>
 </div>
 
 {% endblock %}
