@@ -1,0 +1,83 @@
+{% extends 'base_admin.html' %}
+
+{%block administrador %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      alert("{{ messages[0] }}");
+    </script>
+  {% endif %}
+{% endwith %}
+<form action="{{url_for('admin_act', id_admin=admin.id_admin)}}" method="post" enctype="multipart/form-data">
+    <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="text-center">
+                <img src="{{ url_for('static', filename='image/administradores/' + admin.imagen) }}" alt="Imagen actual" class="img-fluid mb-3 imagen_perfil" id="imagen_actual">
+                <img src="" alt="Actualizacio de imagen" class="img-fluid mb-3 imagen_perfil" id="imagen_placeholder" style="display: none;">
+                <input type="file" name="act_imagen" id="act_imagen" class="form-control" onchange="mostrarNuevaImagen(this)">
+                <input type="hidden" name="imagen_seleccionada" id="imagen_seleccionada">
+            </div>
+        </div>
+
+
+          <div class="col-md-6">
+            <form>
+              <div class="form-group">
+                <label for="act_nombre_admin">Nombre (s):</label>
+                <input type="text" id="act_nombre_admin" name="act_nombre_admin" class="form-control"  placeholder="{{admin.nombre_admin}}">
+              </div>
+    
+              <div class="form-row align-items-center">
+                <div class="form-group col-md-6">
+                  <label for="act_ap_admin">Apellido paterno:</label>
+                  <input type="text" id="act_ap_admin" name="act_ap_admin" class="form-control"  placeholder="{{admin.ap_admin}}">
+                </div>
+    
+                <div class="form-group col-md-6">
+                  <label for="admin-maternal">Apellido materno:</label>
+                  <input type="text" id="act_am_admin" name="act_am_admin" class="form-control"  placeholder="{{admin.am_admin}}">
+                </div>
+              </div>
+
+              <div class="form-row align-items-center">
+                <div class="form-group col-md-6">
+                  <label for="admin-lastname">Correo:</label>
+                  <input type="email" id="act_correo" name="act_correo" class="form-control"  placeholder="{{admin.correo}}">
+                </div>
+    
+                <div class="form-group col-md-6">
+                  <label for="admin-maternal">Puesto:</label>
+                  <input type="text" id="act_puesto" name="act_puesto" class="form-control"  placeholder="{{admin.puesto}}">
+                </div>
+              </div>
+              
+              <div class="form-row align-items-center">
+                <div class="form-group col-md-6">
+                  <label for="admin-lastname">Numero de empleado:</label>
+                  <input type="text" id="act_n_empleado" name="act_n_empleado" class="form-control"  placeholder="{{admin.n_empleado}}">
+                </div>
+    
+                <div class="form-group col-md-6">
+                  <label for="admin-password">Contraseña:</label>
+                  <div class="input-group">
+                    <input type="password" id="act_psw" name="act_psw" class="form-control" value="{{admin.psw}}" oninput="validarContraseña()">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="toggle-password" onclick="togglePasswordVisibility()">
+                        <i class="far fa-eye-slash"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <small id="password-feedback" class="form-text text-muted"></small>
+                </div>
+    
+              <div class="form-group">
+                <button type="submit" class="btn btn-success" onclick="if(validarContraseña()) actualizarDatos()">Actualizar</button>
+                <a href="{{url_for('bienvenida')}}" class="btn btn-danger" >Cancelar</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+</form>
+{%endblock%}

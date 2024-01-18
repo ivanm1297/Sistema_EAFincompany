@@ -1,11 +1,19 @@
 {%extends 'base_admin.html'%}
 
 {%block administrador%}
+<style>
+  
 
-<div class="container" style="margin-top:5em;">
+.nav-btn {
+    height: 33px;
+    background-color: red;
+    color: white;
+}
+</style>
+<div class="container" style="margin-top:3em;">
   <!-- Botón para abrir el modal -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#miModal">
-    Agregar Imagen
+  <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#miModal">
+    <i class="fa-solid fa-plus"></i> Agregar
   </button>
   {%include 'admin/op_carrusel/reg_imagen.html'%}
 
@@ -13,17 +21,14 @@
 
 <div class="container mx-auto ">
 
-  <div class="d-flex">
-
-  </div>
 
   <div class="row">
     <div class="col-md-6">
-      <table class="table">
-        <thead>
+      <table id="tabla_imagenes" class="table">
+        <thead style="background: #570606;">
           <tr>
-            <th>Imagen</th>
-            <th>Acción</th>
+            <th class="text-light">Imagen</th>
+            <th class="text-light">Acción</th>
           </tr>
         </thead>
         <tbody>
@@ -34,16 +39,29 @@
                 style="max-width: 100px; max-height: 100px;">
             </td>
             <td>
-              <a href="{{ url_for('eliminar_imagen', id_imagen=imagen.id_imagen) }}" class="btn btn-danger">Eliminar</a>
+              <a href="{{ url_for('eliminar_imagen', id_imagen=imagen.id_imagen) }}" class="btn btn-outline-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este auto?')">
+                <i class="fa fa-trash"></i>
+              </a>
             </td>
           </tr>
           {% endfor %}
         </tbody>
-      </table>
-      <div id="pagination" class="text-center">
-        <ul class="pagination"></ul>
-      </div>
+      </table>      
+      <div class="container d-flex justify-content-center ">
+
+        <div class="d-flex paginado">
+            <button class="btn nav-btn me-1" id="previousBtn" ><i class="fa-solid fa-backward"></i></button>
+    
+            <nav aria-label="Page navigation">
+    
+                <ul class="pagination" id="pagination" style="margin-right: 3px;"></ul>
+            </nav>
+            <button class="btn nav-btn ms-1" id="nextBtn" ><i class="fa-solid fa-forward"></i></button>
+        </div>
     </div>
+    
+    </div>
+    
     <div class="col-md-6">
       <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">

@@ -123,21 +123,22 @@
                 </span>
 
                 <span class="d-lg-flex flex-column gap-1 d-none">
-                  <h5 class="my-0">{{ admin.nombre_admin }}</h5>
+                  <h5 class="my-0"><img src="{{ url_for('static', filename='image/administradores/' + admin.imagen) }}" alt="Imagen actual" class="img-fluid mb-3 my-3 me-3" id="imagen_mini" >
+                    {{ admin.nombre_admin }} <i class="fa-solid fa-chevron-down"></i></h5>
                 </span>
               </a>
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated profile-dropdown">
 
 
                 <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item">
-                  <i class="mdi mdi-account-circle me-1"></i>
+                <a href="{{url_for('perfil_admin')}}" class="dropdown-item">
+                  <i class="fa-regular fa-user"></i>
                   <span>Mi Perfil</span>
                 </a>
 
                 <!-- item-->
                 <a href="{{url_for('logout')}}" class="dropdown-item">
-                  <i class="mdi mdi-logout me-1"></i>
+                  <i class="fa fa-right-to-bracket"></i>
                   <span>Salir</span>
                 </a>
               </div>
@@ -153,7 +154,7 @@
         <!-- Brand Logo Light -->
         <a href="index.html" class="logo logo-light">
           <span class="logo-lg ">
-            <img src="/static/image/logo1.png" alt="logo"
+            <img src="/static/image/Logo_E&A_Fincompany.png" alt="logo"
               style="width:120px; height:120px; background:#fff; border-radius:10px;"
               class="d-flex align-items-center justify-content-center mt-3 mx-4">
 
@@ -174,21 +175,13 @@
           <i class="ri-close-fill align-middle"></i>
         </div>
 
-        <!-- Sidebar -left -->
-        <div class="h-100" id="leftside-menu-container" data-simplebar>
-          <!-- Leftbar User -->
-          <div class="leftbar-user">
-            <a href="pages-profile.html">
-              <img src="assets/images/users/avatar-1.jpg" alt="user-image" height="42" class="rounded-circle shadow-sm">
-              <span class="leftbar-user-name mt-2">Dominic Keller</span>
-            </a>
-          </div>
+        
 
           <!--- Sidemenu -->
           <ul class="side-nav">
 
             <li class="side-nav-item">
-              <a href="{{url_for('prueba')}}" class="side-nav-link">
+              <a href="{{url_for('bienvenida')}}" class="side-nav-link">
                 <i><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-house"
                     viewBox="0 0 16 16">
                     <path
@@ -268,7 +261,7 @@
 
 
         <li class="side-nav-item">
-          <a href="#" class="side-nav-link">
+          <a href="{{url_for('administradores')}}" class="side-nav-link">
             <i><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-people"
                 viewBox="0 0 16 16">
                 <path

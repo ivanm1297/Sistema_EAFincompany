@@ -346,12 +346,21 @@ footer a:hover {
 }
 
 #mainImage img {
-    width: 90%;
-    height: 300px;
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+    max-height: 300px;
+
     border-radius: 10px;
     
 }
-
+.imagen_mini{
+    width: 100%;
+    height: 100%;
+    max-width: 50px;
+    max-height: 200px;
+    object-fit: contain;
+}
 .descripcion {
     border: 2px solid rgb(214, 21, 21);
     border-radius: 10px;

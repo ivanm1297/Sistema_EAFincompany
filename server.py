@@ -4,6 +4,7 @@ from models import db, tbl_admin, tbl_carrusel, tbl_catal_autos, tbl_catal_motos
 from conex import DATABASE_URI
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
+from flask_login import current_user, LoginManager
 import os
 from datetime import datetime, timedelta
 import numpy as np
@@ -33,10 +34,12 @@ db.init_app(app)
 UPLOAD_FOLDER = 'static/image/carrusel'
 UPLOAD_FOLDER_2= 'static/image/catalogo_autos'
 UPLOAD_FOLDER_3= 'static/image/catalogo_motos'
+UPLOAD_FOLDER_4 = 'static/image/administradores'
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['UPLOAD_FOLDER_2'] = UPLOAD_FOLDER_2
 app.config['UPLOAD_FOLDER_3'] = UPLOAD_FOLDER_3
+app.config['UPLOAD_FOLDER_4'] = UPLOAD_FOLDER_4
 
 
 # Función para verificar si el administrador ha iniciado sesión.
@@ -84,7 +87,7 @@ def login_session():
     if user:
         # Inicio de sesión exitoso
         session['administrador_id'] = user.id_admin
-        return redirect(url_for('prueba'))
+        return redirect(url_for('bienvenida'))
     else:
         # Las credenciales son incorrectas
         error = "Credenciales incorrectas. Inténtalo de nuevo."
@@ -187,9 +190,9 @@ def catalogo_moto():
     catalogo_motos=tbl_catal_motos.query.all()
 
     return render_template('clientes/catalogo_motos.html', catalogo_motos=catalogo_motos)
-@app.get('/prueba')
+@app.get('/bienvenida')
 @login_required
-def prueba():
+def bienvenida():
     admin = tbl_admin.query.get(session['administrador_id'])
     return render_template('admin/welcome_admin.html', admin=admin)
 
@@ -373,12 +376,10 @@ def actualizar_moto(id_moto):
     if act_descripcion != None and act_descripcion != '':
         catalogo_motos.descipcion = act_descripcion
         
-      # Obtener la lista de archivos de imágenes del formulario
     nuevas_imagenes = request.files.getlist('act_imagen')
 
-    nombres_nuevas_imagenes = []  # Almacenará los nombres de archivo de las nuevas imágenes
+    nombres_nuevas_imagenes = [] 
 
-    # Procesar las nuevas imágenes
     for nueva_imagen in nuevas_imagenes:
         if nueva_imagen and allowed_file(nueva_imagen.filename):
             nuevo_nombre = secure_filename(nueva_imagen.filename)
@@ -386,7 +387,6 @@ def actualizar_moto(id_moto):
             nueva_imagen.save(nueva_ruta)
             nombres_nuevas_imagenes.append(nuevo_nombre)
 
-    # Agregar los nuevos nombres de archivo a la lista existente en la base de datos
     if nombres_nuevas_imagenes:
         imagenes_actuales = catalogo.imagen.split(",") if catalogo.imagen else []
         imagenes_actuales.extend(nombres_nuevas_imagenes)
@@ -441,7 +441,6 @@ def catalogo_motos():
 @app.post('/agregar_moto')
 def agregar_moto():
     if request.method == 'POST':
-        # Otros campos del formulario
         modelo_moto = request.form['modelo_moto']
         año_moto = request.form['año_moto']
         gasolina = request.form['gasolina']
@@ -451,23 +450,19 @@ def agregar_moto():
         precio_lista = request.form['precio_lista']
         precio_inicial = request.form['precio_inicial']
 
-
-        # Obtener la lista de archivos de imágenes
         imagen = request.files.getlist('imagen')
 
-        nombres_imagenes = []  # Almacenará los nombres de archivo de las imágenes
+        nombres_imagenes = [] 
 
         for imagen in imagen:
             if imagen and allowed_file(imagen.filename):
                 filename = secure_filename(imagen.filename)
                 ruta = os.path.join(app.config['UPLOAD_FOLDER_3'], filename)
                 imagen.save(ruta)
-                nombres_imagenes.append(filename)  # Agrega el nombre de la imagen a la lista
+                nombres_imagenes.append(filename)  
 
-        # Convierte la lista de nombres de archivo en una cadena separada por comas
         imagenes_str = ",".join(nombres_imagenes)
 
-        # Crea un nuevo objeto tbl_catal_autos con los datos recibidos, incluyendo la cadena de imágenes
         nueva_moto = tbl_catal_motos(
             modelo_moto=modelo_moto,
             año_moto=año_moto,
@@ -477,7 +472,7 @@ def agregar_moto():
             descripcion=descripcion,
             precio_inicial=precio_inicial,
             precio_lista=precio_lista,
-            imagen=imagenes_str  # Almacena la cadena de nombres de archivos en la base de datos
+            imagen=imagenes_str 
         )
 
         db.session.add(nueva_moto)
@@ -624,12 +619,7 @@ def eliminar_cotizacion_moto(id_coti_moto):
 def graficas():
     admin = tbl_admin.query.get(session['administrador_id'])
 
-    # Obtener cotizaciones de autos por día en MySQL
-<<<<<<< HEAD
     cotizaciones_por_dia_autos = (
-=======
-    cotizaciones_por_dia = (
->>>>>>> 1c42f03457f932355279111d05691d8c47ca1fdf
         db.session.query(
             db.func.DATE(tbl_coti_autos.fecha_coti).label('dia'),
             db.func.count(tbl_coti_autos.id_coti_auto).label('total_cotizaciones')
@@ -639,37 +629,15 @@ def graficas():
         .all()
     )
 
-<<<<<<< HEAD
-    # Crear datos para la gráfica de líneas de autos
     dias_autos = [cotizacion.dia for cotizacion in cotizaciones_por_dia_autos]
     total_cotizaciones_por_dia_autos = [cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_dia_autos]
 
-    # Crear gráfica de líneas para el total de cotizaciones de autos por día
     fig_lineas_autos = px.line(x=dias_autos, y=total_cotizaciones_por_dia_autos, labels={'x': 'Día', 'y': 'Total de Cotizaciones por Día'})
 
-    # Configurar la visualización para permitir la navegación
     fig_lineas_autos.update_layout(xaxis=dict(type='category', fixedrange=True), yaxis=dict(fixedrange=True))
 
-    # Configurar la visualización para ocultar la barra de herramientas
     graph_lineas_autos = fig_lineas_autos.to_html(full_html=False, config={'displayModeBar': False})
-=======
-    # Crear datos para la gráfica de líneas
-    dias = [cotizacion.dia for cotizacion in cotizaciones_por_dia]
-    total_cotizaciones_por_dia = [cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_dia]
 
-    # Crear gráfica de líneas para el total de cotizaciones por día
-    fig_lineas = px.line(x=dias, y=total_cotizaciones_por_dia, labels={'x': 'Día', 'y': 'Total de Cotizaciones por Día'})
-
-    # Configurar la visualización para permitir la navegación
-    fig_lineas.update_layout(xaxis=dict(type='category', fixedrange=True), yaxis=dict(fixedrange=True))
-
-    # Configurar la visualización para ocultar la barra de herramientas
-    graph_lineas = fig_lineas.to_html(full_html=False, config={'displayModeBar': False})
-
-    # Resto del código...
->>>>>>> 1c42f03457f932355279111d05691d8c47ca1fdf
-
-    # Obtener modelos cotizados de autos
     modelos_cotizados_autos = (
         db.session.query(
             tbl_coti_autos.modelo_coti_auto,
@@ -680,19 +648,14 @@ def graficas():
         .all()
     )
 
-<<<<<<< HEAD
-    # Crear datos para la gráfica de barras de autos
     modelos_autos = [modelo[0] for modelo in modelos_cotizados_autos]
     cotizaciones_autos = [modelo[1] for modelo in modelos_cotizados_autos]
 
-    # Limitar a los 4 valores más altos solo para la gráfica de barras
     modelos_barras_autos = modelos_autos[:4]
     cotizaciones_barras_autos = cotizaciones_autos[:4]
 
-    # Crear gráfica de barras para autos
     fig_autos = px.bar(x=modelos_barras_autos, y=cotizaciones_barras_autos, labels={'x': 'Modelo Auto', 'y': 'Total de Cotizaciones Autos'})
 
-    # Obtener cotizaciones de autos por mes en MySQL
     cotizaciones_por_mes_autos = (
         db.session.query(
             db.func.MONTH(tbl_coti_autos.fecha_coti).label('mes'),
@@ -703,24 +666,19 @@ def graficas():
         .all()
     )
 
-    # Crear datos para la gráfica de pastel de autos
     meses_autos = [calendar.month_name[cotizacion.mes] for cotizacion in cotizaciones_por_mes_autos]
 
-    # Obtener el nombre del mes actual en español
     nombre_mes_actual_autos = calendar.month_name[datetime.now().month]
 
-    # Crear gráfica de pastel para autos con etiquetas personalizadas
     fig_pastel_autos = px.pie(
         names=meses_autos,
         values=[cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_mes_autos],
         title=f'Distribución de Cotizaciones de Autos de {nombre_mes_actual_autos}'
     )
 
-    # Configurar la visualización para ocultar la barra de herramientas
     graph_autos = fig_autos.to_html(full_html=False, config={'displayModeBar': False})
     graph_pastel_autos = fig_pastel_autos.to_html(full_html=False, config={'displayModeBar': False})
 
-    # Obtener cotizaciones de motos por día en MySQL
     cotizaciones_por_dia_motos = (
         db.session.query(
             db.func.DATE(tbl_coti_motos.fecha_coti).label('dia'),
@@ -731,22 +689,15 @@ def graficas():
         .all()
     )
 
-    # Crear datos para la gráfica de líneas de motos
     dias_motos = [cotizacion.dia for cotizacion in cotizaciones_por_dia_motos]
     total_cotizaciones_por_dia_motos = [cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_dia_motos]
 
-    # Crear gráfica de líneas para el total de cotizaciones de motos por día
     fig_lineas_motos = px.line(x=dias_motos, y=total_cotizaciones_por_dia_motos, labels={'x': 'Día', 'y': 'Total de Cotizaciones por Día'})
 
-    # Configurar la visualización para permitir la navegación
     fig_lineas_motos.update_layout(xaxis=dict(type='category', fixedrange=True), yaxis=dict(fixedrange=True))
 
-    # Configurar la visualización para ocultar la barra de herramientas
     graph_lineas_motos = fig_lineas_motos.to_html(full_html=False, config={'displayModeBar': False})
 
-=======
->>>>>>> 1c42f03457f932355279111d05691d8c47ca1fdf
-    # Obtener modelos cotizados de motos
     modelos_cotizados_motos = (
         db.session.query(
             tbl_coti_motos.modelo_coti_moto,
@@ -758,56 +709,24 @@ def graficas():
         .all()
     )
 
-<<<<<<< HEAD
-    # Crear datos para la gráfica de barras de motos
     modelos_motos = [modelo[0] for modelo in modelos_cotizados_motos]
     cotizaciones_motos = [modelo[1] for modelo in modelos_cotizados_motos]
 
-    # Limitar a los 4 valores más altos solo para la gráfica de barras
     modelos_barras_motos = modelos_motos[:4]
     cotizaciones_barras_motos = cotizaciones_motos[:4]
 
-    # Crear gráfica de barras para motos
     fig_motos = px.bar(x=modelos_barras_motos, y=cotizaciones_barras_motos, labels={'x': 'Modelo Moto', 'y': 'Total de Cotizaciones Motos'})
 
-    # Obtener cotizaciones de motos por mes en MySQL
     cotizaciones_por_mes_motos = (
         db.session.query(
             db.func.MONTH(tbl_coti_motos.fecha_coti).label('mes'),
             db.func.count(tbl_coti_motos.id_coti_moto).label('total_cotizaciones')
-=======
-    # Crear datos para la gráfica de autos
-    modelos_autos = [modelo[0] for modelo in modelos_cotizados_autos]
-    cotizaciones_autos = [modelo[1] for modelo in modelos_cotizados_autos]
-
-    # Limitar a los 4 valores más altos solo para la gráfica de barras
-    modelos_barras = modelos_autos[:4]
-    cotizaciones_barras = cotizaciones_autos[:4]
-
-    # Crear datos para la gráfica de motos
-    modelos_motos = [modelo[0] for modelo in modelos_cotizados_motos]
-    cotizaciones_motos = [modelo[1] for modelo in modelos_cotizados_motos]
-
-    # Crear gráfica de barras para autos
-    fig_autos = px.bar(x=modelos_barras, y=cotizaciones_barras, labels={'x': 'Modelo Auto', 'y': 'Total de Cotizaciones Autos'})
-
-    # Crear gráfica de barras para motos
-    fig_motos = px.bar(x=modelos_motos, y=cotizaciones_motos, labels={'x': 'Modelo Moto', 'y': 'Total de Cotizaciones Motos'})
-
-    # Obtener cotizaciones de autos por mes en MySQL
-    cotizaciones_por_mes = (
-        db.session.query(
-            db.func.MONTH(tbl_coti_autos.fecha_coti).label('mes'),
-            db.func.count(tbl_coti_autos.id_coti_auto).label('total_cotizaciones')
->>>>>>> 1c42f03457f932355279111d05691d8c47ca1fdf
         )
         .group_by('mes')
         .order_by('mes')
         .all()
     )
 
-<<<<<<< HEAD
-    # Crear datos para la gráfica de pastel de motos
     meses_motos = [calendar.month_name[cotizacion.mes] for cotizacion in cotizaciones_por_mes_motos]
 
     # Obtener el nombre del mes actual en español
@@ -825,29 +744,6 @@ def graficas():
     graph_pastel_motos = fig_pastel_motos.to_html(full_html=False, config={'displayModeBar': False})
 
     return render_template('admin/graficas.html', admin=admin, graph_lineas_autos=graph_lineas_autos, graph_autos=graph_autos, graph_pastel_autos=graph_pastel_autos, graph_lineas_motos=graph_lineas_motos, graph_motos=graph_motos, graph_pastel_motos=graph_pastel_motos)
-=======
-    # Crear datos para la gráfica de pastel de autos
-    meses = [calendar.month_name[cotizacion.mes] for cotizacion in cotizaciones_por_mes]
-    total_cotizaciones_por_mes = [cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_mes]
-
-    # Obtener el nombre del mes actual en español
-    nombre_mes_actual = calendar.month_name[datetime.now().month]
-
-    # Crear gráfica de pastel para autos con etiquetas personalizadas
-    fig_pastel_autos = px.pie(
-        names=meses,
-        values=total_cotizaciones_por_mes,
-        title=f'Distribución de Cotizaciones de Autos de {nombre_mes_actual}'
-    )
-
-    # Configurar la visualización para ocultar la barra de herramientas
-    graph_autos = fig_autos.to_html(full_html=False, config={'displayModeBar': False})
-    graph_motos = fig_motos.to_html(full_html=False, config={'displayModeBar': False})
-    graph_pastel_autos = fig_pastel_autos.to_html(full_html=False, config={'displayModeBar': False})
-
-    return render_template('admin/graficas.html', admin=admin, graph_lineas=graph_lineas, graph_autos=graph_autos, graph_motos=graph_motos, graph_pastel_autos=graph_pastel_autos)
-
->>>>>>> 1c42f03457f932355279111d05691d8c47ca1fdf
 
 
 @app.route('/get_cotizaciones', methods=['GET'])
@@ -864,8 +760,134 @@ def get_cotizaciones():
     ]
 
     return jsonify(data)
+#Actualización de perfil
+@app.route('/perfil_admin', methods=['GET'])
+def perfil_admin():
+    admin = tbl_admin.query.get(session['administrador_id'])
 
-#Gestion de administradores
+    return render_template('admin/perfil_admin.html', admin=admin)
+@app.post('/admin_act/<id_admin>')
+def admin_act(id_admin):
+    admin = tbl_admin.query.get(id_admin)
+    
+    # Obtener datos del formulario
+    act_nombre_admin = request.form['act_nombre_admin']
+    act_ap_admin = request.form['act_ap_admin']
+    act_am_admin = request.form['act_am_admin']
+    act_n_empleado = request.form['act_n_empleado']
+    act_psw = request.form['act_psw']
+    act_correo = request.form['act_correo']
+    act_puesto = request.form['act_puesto']
+
+    # Actualizar campos si se proporcionan valores válidos
+    if act_nombre_admin:
+        admin.nombre_admin = act_nombre_admin
+
+    if act_ap_admin:
+        admin.ap_admin = act_ap_admin
+
+    if act_am_admin:
+        admin.am_admin = act_am_admin
+
+    if act_n_empleado:
+        admin.n_empleado = act_n_empleado
+
+    if act_psw:
+        admin.psw = act_psw
+
+    if act_correo:
+        admin.correo = act_correo
+
+    if act_puesto:
+        admin.puesto = act_puesto
+
+    # Procesar la imagen
+    nueva_imagen = request.files['act_imagen']
+
+    if nueva_imagen and allowed_file(nueva_imagen.filename):
+        nuevo_nombre = secure_filename(nueva_imagen.filename)
+        nueva_ruta = os.path.join(app.config['UPLOAD_FOLDER_4'], nuevo_nombre)
+        nueva_imagen.save(nueva_ruta)
+
+        # Actualizar el campo de imagen en la base de datos
+        admin.imagen = nuevo_nombre
+
+    db.session.add(admin)
+    db.session.commit()
+    try:
+        db.session.commit()
+        flash('Actualización exitosa', 'success')  # Agrega un mensaje flash para éxito
+    except:
+        db.session.rollback()
+        flash('Error al actualizar. Inténtalo de nuevo.', 'error')  # Agrega un mensaje flash para error
+
+    return redirect(url_for('perfil_admin'))
+
+#Vista de los administradores
+@app.route('/administradores', methods=['GET'])
+def administradores():
+    admin = tbl_admin.query.get(session['administrador_id'] )
+    consulta_administradores = tbl_admin.query.all()
+    return render_template('admin/gestion_administradores.html', admin=admin, consulta_administradores=consulta_administradores)
+
+#Registro de administrador
+@app.route('/reg_admin', methods=['POST'])
+def reg_admin():
+    if request.method == 'POST':
+        nombre_admin = request.form['nombre_admin']
+        ap_admin = request.form['ap_admin']
+        am_admin = request.form['am_admin']
+        n_empleado = request.form['n_empleado']
+        psw = request.form['psw']
+        correo = request.form['correo']
+        puesto = request.form['puesto']
+
+        imagen = request.files['imagen']
+        if imagen:
+            imagen.save(app.config['UPLOAD_FOLDER_4'] + '/' + imagen.filename)
+            imagen_path = 'administradores/' + imagen.filename
+        else:
+            imagen_path = None
+
+        nuevo_admin = tbl_admin(
+            nombre_admin=nombre_admin,
+            ap_admin=ap_admin,
+            am_admin=am_admin,
+            n_empleado=n_empleado,
+            psw=psw,
+            correo=correo,
+            puesto=puesto,
+            imagen=imagen_path  
+        )
+
+        db.session.add(nuevo_admin)
+        db.session.commit()
+
+        flash('Nuevo administrador agregado con éxito', 'success')
+        return redirect(url_for('administradores'))     
+    else:
+        flash('Error al agregar el administrador', 'error')
+        return redirect(url_for('administradores'))
+
+
+@app.get('/eliminar_admin/<id_admin>')
+@login_required
+def eliminar_admin(id_admin):
+    consulta_administradores = tbl_admin.query.get(id_admin)
+
+    if not cotizacion_auto:
+        flash('El auto no existe', 'error')
+        return redirect(url_for('administradores'))
+
+    # Realizar la eliminación del cotizacion_auto
+    db.session.delete(consulta_administradores)
+    db.session.commit()
+
+    flash('Auto eliminado exitosamente', 'success')
+    return redirect(url_for('administradores'))
+
+
 if __name__ == '__main__':
     app.secret_key = 'jfjfi029832rninf 2infiwenf2j ienfkowenf92h okenfi20'
     app.run("0.0.0.0", 8080, debug=True)
+    

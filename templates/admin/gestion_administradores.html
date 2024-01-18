@@ -2,4 +2,37 @@
 
 {% block administrador %}
 
+<div class="container mx-auto">
+    <h3>Administradores</h3>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregaradminModal">
+        <i class="fa-solid fa-user-plus"></i>
+    </button>
+    {% include 'admin/gestion_administradores/reg_admin.html'%}
+</div>
+
+
+{% include 'admin/catalogo_autos/reg_auto.html' %}
+
+<div class="container mt-3 d-flex flex-wrap">
+    {% for admin in consulta_administradores %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card card_administradores shadow position-relative">
+            <img src="{{ url_for('static', filename='image/administradores/' + admin.imagen) }}"
+                class="card-img-top imagen_administrador" alt="Imagen del Administrador {{ admin.id }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ admin.nombre_admin }} {{ admin.ap_admin }} {{ admin.am_admin }}</h5>
+                <p class="card-text">Puesto: {{ admin.puesto }}</p>
+                <p class="card-text">Correo electrónico: {{ admin.correo }}</p>
+                <p class="card-text">Numero de empleado: {{ admin.n_empleado }}</p>
+            </div>
+            <a href="{{ url_for('eliminar_admin', id_admin=admin.id_admin) }}"
+                onclick="return confirm('¿Estás seguro de que deseas eliminar este auto?')"
+                class="btn-close position-absolute top-0 end-0 m-0" aria-label="Close"></a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
 {%endblock%}

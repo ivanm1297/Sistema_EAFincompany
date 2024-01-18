@@ -2,7 +2,6 @@
 
 {% block administrador %}
 <style>
-    /* Estilos personalizados para las casillas del paginado */
     .pagination .page-item .page-link {
         background-color: red;
         color: white;
@@ -25,115 +24,116 @@
         color: white;
     }
 
-    /* Estilos para el contenedor que engloba el menú y la tabla */
     .content-container {
-        padding-left: 60px; /* Ajusta este valor según el ancho de tu menú */
-        margin-top: 20px; /* Ajusta este valor según el espacio que desees entre el menú y la tabla */
+        padding-left: 60px;
+        margin-top: 20px;
     }
 
-    /* Estilos para hacer la tabla responsiva */
     @media screen and (max-width: 767px) {
         .content-container {
-            padding-left: 50%; /* La mitad del ancho de la pantalla */
-            margin-top: 20px; /* Ajusta este valor según el espacio que desees entre el menú y la tabla */
+            padding-left: 50%;
+            margin-top: 20px;
         }
     }
 </style>
 
 
-<div class="container mx-5 my-3 d-flex justify-content-between align-items-center">
-    <input type="text" name="busqueda_automatica" id="busqueda_automatica" placeholder="¿Qué Moto Buscas?" style="border: 2px solid #111; text-align:center; border-radius: 5px;">
-    <button id="botonImprimir" class="btn btn-success"><i class="fa-solid fa-file-pdf" style="font-size: 24px;"></i></button>
+<div class="container  my-3 d-flex justify-content-between align-items-center">
+    <input type="text" name="busqueda_automatica" id="busqueda_automatica" placeholder="¿Qué Moto Buscas?"
+        style="border: 2px solid #111; text-align:center; border-radius: 5px; margin-right: 10px;">
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarMotoModal">
-        Agregar Moto
-    </button>
+    <div class="d-flex">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarMotoModal"
+            style="margin-right: 5px;">
+            <i class="fa-solid fa-plus"></i>Agregar
+        </button>
+        <button id="botonImprimir" class="btn btn-success">
+            <i class="fa-solid fa-file-pdf" style="font-size: 24px;"></i>
+        </button>
+    </div>
+
     {% include 'admin/catalogo_motos/reg_moto.html' %}
 
 </div>
 
- 
 
-<!-- Contenedor que engloba el menú y la tabla con padding izquierdo -->
+
 <div class="container d-flex align-items-center justify-content-center content-container">
-    
-    <!-- Menú de navegación vertical -->
-    <!-- Agrega aquí el código de tu menú de navegación vertical -->
 
-    <!-- Tu tabla -->
+    
     <div class="table-container">
         <table id="miTabla" class="table">
-        <!-- Encabezados de la tabla -->
-        <thead style="background-color: #570606;">
-            <tr>
-                <th style="color: #fff; font-size:14px;">Modelo</th>
-                <th style="color: #fff; font-size:14px;">Año</th>
-                <th style="color: #fff; font-size:14px;">Combustible</th>
-                <th style="color: #fff; font-size:14px;">Transmisión</th>
-                <th style="color: #fff; font-size:14px;">Marca</th>
-                <th style="color: #fff; font-size:14px;">Imagen</th>
-                <th style="color: #fff; font-size:14px;">Descripción</th>
-                <th style="color: #fff; font-size:14px;">Precio en lista</th>
-                <th style="color: #fff; font-size:14px;">Pago Inicial</th>
-                <th style="color: #fff; font-size:14px;">Opciones</th>
-            </tr>
-        </thead>
-        <!-- Cuerpo de la tabla -->
-        <tbody>
-            {% for catalogo in catalogo %}
-            <tr>
-                <td style="font-size: 13px;">{{ catalogo.modelo_moto }}</td>
-                <td style="font-size: 13px;">{{ catalogo.año_moto }}</td>
-                <td style="font-size: 13px;">{{ catalogo.gasolina }}</td>        
-                <td style="font-size: 13px;">{{ catalogo.trasmision }}</td>
-                <td style="font-size: 13px;">{{ catalogo.marca }}</td>
-                <td>
-                    <div id="myCarousel" class="carousel slide admin_carrusel" data-ride="carousel">
-                        <div class="carousel-inner">
-                            {% for imagen in catalogo.imagen.split(',') %}
-                            <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                <img class="foto_2" src="{{ url_for('static', filename='image/catalogo_motos/' + imagen) }}" >
+            <thead style="background-color: #570606;">
+                <tr>
+                    <th style="color: #fff; font-size:14px;">Modelo</th>
+                    <th style="color: #fff; font-size:14px;">Año</th>
+                    <th style="color: #fff; font-size:14px;">Combustible</th>
+                    <th style="color: #fff; font-size:14px;">Transmisión</th>
+                    <th style="color: #fff; font-size:14px;">Marca</th>
+                    <th style="color: #fff; font-size:14px;">Imagen</th>
+                    <th style="color: #fff; font-size:14px;">Descripción</th>
+                    <th style="color: #fff; font-size:14px;">Precio en lista</th>
+                    <th style="color: #fff; font-size:14px;">Pago Inicial</th>
+                    <th style="color: #fff; font-size:14px;">Opciones</th>
+                </tr>
+            </thead>
+            <!-- Cuerpo de la tabla -->
+            <tbody>
+                {% for catalogo in catalogo %}
+                <tr>
+                    <td style="font-size: 13px;">{{ catalogo.modelo_moto }}</td>
+                    <td style="font-size: 13px;">{{ catalogo.año_moto }}</td>
+                    <td style="font-size: 13px;">{{ catalogo.gasolina }}</td>
+                    <td style="font-size: 13px;">{{ catalogo.trasmision }}</td>
+                    <td style="font-size: 13px;">{{ catalogo.marca }}</td>
+                    <td>
+                        <div id="myCarousel" class="carousel slide admin_carrusel" data-ride="carousel">
+                            <div class="carousel-inner">
+                                {% for imagen in catalogo.imagen.split(',') %}
+                                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                    <img class="foto_2"
+                                        src="{{ url_for('static', filename='image/catalogo_motos/' + imagen) }}">
+                                </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
                         </div>
-                    </div>
-                </td>
-                <td style="white-space: normal; overflow: hidden; font-size:13px;">{{ catalogo.descripcion | truncate(300) }}</td>
-                <td style="font-size: 13px;">${{ catalogo.precio_inicial }}</td>
-                <td style="font-size: 13px;">${{catalogo.precio_lista }}</td>
-                <td>
-                    <a class="btn btn-outline-danger" href="{{ url_for('eliminar_moto', id_moto=catalogo.id_moto) }}"
-                        onclick="return confirm('¿Estás seguro de que deseas eliminar este auto?')" style="border-radius: 5px;">
-                        <i class="fa fa-trash"></i>
-                    </a>
-                    <a class="btn btn-outline-success" data-toggle="modal" data-target="#actMotosModal{{catalogo.id_moto}}"
-                        style="border-radius: 5px;">
-                        <i class="fa fa-pen-to-square"></i>
-                    </a>
-                    {% include 'admin/catalogo_motos/act_motos.html' %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                    </td>
+                    <td style="white-space: normal; overflow: hidden; font-size:13px;">{{ catalogo.descripcion |
+                        truncate(300) }}</td>
+                    <td style="font-size: 13px;">${{ catalogo.precio_inicial }}</td>
+                    <td style="font-size: 13px;">${{catalogo.precio_lista }}</td>
+                    <td>
+                        <a class="btn btn-outline-danger"
+                            href="{{ url_for('eliminar_moto', id_moto=catalogo.id_moto) }}"
+                            onclick="return confirm('¿Estás seguro de que deseas eliminar este auto?')"
+                            style="border-radius: 5px;">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        <a class="btn btn-outline-success" data-toggle="modal"
+                            data-target="#actMotosModal{{catalogo.id_moto}}" style="border-radius: 5px;">
+                            <i class="fa fa-pen-to-square"></i>
+                        </a>
+                        {% include 'admin/catalogo_motos/act_motos.html' %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    
 
-</div></div>
-<!-- Mensaje de "registro no encontrado" -->
-<div class="container" id="mensajeNoEncontrado" style="display: none;">
-    <p style="font-weight: bold; color:#111; text-align:center;">No se han encontrado coincidencias</p>
+
+    </div>
 </div>
 <div class="container d-flex justify-content-center ">
 
     <div class="d-flex paginado">
-        <button class="btn nav-btn me-1" id="previousBtn" ><i class="fa-solid fa-backward"></i></button>
+        <button class="btn nav-btn me-1" id="previousBtn"><i class="fa-solid fa-backward"></i></button>
 
         <nav aria-label="Page navigation">
 
             <ul class="pagination" id="pagination" style="margin-right: 3px;"></ul>
         </nav>
-        <button class="btn nav-btn ms-1" id="nextBtn" ><i class="fa-solid fa-forward"></i></button>
+        <button class="btn nav-btn ms-1" id="nextBtn"><i class="fa-solid fa-forward"></i></button>
     </div>
 </div>
 

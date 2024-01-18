@@ -36,12 +36,12 @@
             <!-- Galería de miniaturas -->
             {% for imagen in catalogo_moto.imagen.split(',') %}
             <div class="col-6 col-md-3 mb-2">
-                <img class="thumbnail img-fluid w-100"
-                    style="border: 5px solid rgb(214, 21, 21); object-fit:cover; height:50%;"
+                <img class="thumbnail img-fluid w-100 "
+                    style="border: 2px solid rgb(214, 21, 21); height:100px;"
                     src="{{ url_for('static', filename='/image/catalogo_motos/' + imagen) }}"
                     onclick="mostrarImagen(this)">
             </div>
-            {% endfor %}
+            {% endfor %} 
 
         </div>
           

@@ -1,27 +1,22 @@
-<!-- Modal para agregar auto -->
 <div class="modal" id="agregarMotoModal">
     <div class="modal-dialog">
         <div class="modal-content">
-
-            <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Agregar Nueva Moto</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-
-            <!-- Modal Body - Formulario para agregar auto -->
             <div class="modal-body">
                 <form action="/agregar_moto" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="modelo_moto">Modelo:</label>
                         <input type="text" class="form-control" id="modelo_moto" name="modelo_moto">
-                    </div>                      
+                    </div>
                     <div class="form-group">
                         <label for="año_moto" class="titulos">Año:</label>
                         <select name="año_moto" class="form-control" id="año_moto">
                             <option value="">Selcciona el año</option>
                             <option value="2023">2023</option>
-                            <option value="2024">2024</option>                            
+                            <option value="2024">2024</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -41,12 +36,7 @@
 
                         <input type="radio" name="trasmision" id="automatico_moto" value="Automatico">
                         <label for="automatico_moto">Automatico</label>
-
-                        
                     </div>
-
-                    <!--<label for="transmision">Transimision:</label>
-                        <input type="text" class="form-control" id="transmision" name="transmision" >-->
                     <div class="form-group">
                         <label for="marca">Marca:</label>
                         <input type="text" class="form-control" id="marca" name="marca">
@@ -67,14 +57,15 @@
                         <input type="file" id="imagen" name="imagen" multiple>
                         <div id="imagenPreview"></div>
                         <textarea id="imageList" name="imageList" style="display: none;"></textarea>
-                    
                     </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Agregar Moto</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+
+                </form>
             </div>
 
-            <button type="submit" class="btn btn-primary">Agregar Moto</button>
-            </form>
         </div>
-
     </div>
-</div>
 </div>
