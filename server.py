@@ -628,7 +628,7 @@ def graficas():
 
     cotizaciones_por_dia_autos = (
 
-    cotizaciones_por_dia = (1c42f03457f932355279111d05691d8c47ca1fdf
+    cotizaciones_por_dia = (
         db.session.query(
             db.func.DATE(tbl_coti_autos.fecha_coti).label('dia'),
             db.func.count(tbl_coti_autos.id_coti_auto).label('total_cotizaciones')
