@@ -625,11 +625,10 @@ def graficas():
     admin = tbl_admin.query.get(session['administrador_id'])
 
     # Obtener cotizaciones de autos por día en MySQL
-<<<<<<< HEAD
+
     cotizaciones_por_dia_autos = (
-=======
-    cotizaciones_por_dia = (
->>>>>>> 1c42f03457f932355279111d05691d8c47ca1fdf
+
+    cotizaciones_por_dia = (1c42f03457f932355279111d05691d8c47ca1fdf
         db.session.query(
             db.func.DATE(tbl_coti_autos.fecha_coti).label('dia'),
             db.func.count(tbl_coti_autos.id_coti_auto).label('total_cotizaciones')
@@ -639,7 +638,6 @@ def graficas():
         .all()
     )
 
-<<<<<<< HEAD
     # Crear datos para la gráfica de líneas de autos
     dias_autos = [cotizacion.dia for cotizacion in cotizaciones_por_dia_autos]
     total_cotizaciones_por_dia_autos = [cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_dia_autos]
@@ -652,7 +650,7 @@ def graficas():
 
     # Configurar la visualización para ocultar la barra de herramientas
     graph_lineas_autos = fig_lineas_autos.to_html(full_html=False, config={'displayModeBar': False})
-=======
+
     # Crear datos para la gráfica de líneas
     dias = [cotizacion.dia for cotizacion in cotizaciones_por_dia]
     total_cotizaciones_por_dia = [cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_dia]
@@ -667,7 +665,6 @@ def graficas():
     graph_lineas = fig_lineas.to_html(full_html=False, config={'displayModeBar': False})
 
     # Resto del código...
->>>>>>> 1c42f03457f932355279111d05691d8c47ca1fdf
 
     # Obtener modelos cotizados de autos
     modelos_cotizados_autos = (
@@ -680,7 +677,6 @@ def graficas():
         .all()
     )
 
-<<<<<<< HEAD
     # Crear datos para la gráfica de barras de autos
     modelos_autos = [modelo[0] for modelo in modelos_cotizados_autos]
     cotizaciones_autos = [modelo[1] for modelo in modelos_cotizados_autos]
@@ -744,8 +740,6 @@ def graficas():
     # Configurar la visualización para ocultar la barra de herramientas
     graph_lineas_motos = fig_lineas_motos.to_html(full_html=False, config={'displayModeBar': False})
 
-=======
->>>>>>> 1c42f03457f932355279111d05691d8c47ca1fdf
     # Obtener modelos cotizados de motos
     modelos_cotizados_motos = (
         db.session.query(
@@ -758,7 +752,6 @@ def graficas():
         .all()
     )
 
-<<<<<<< HEAD
     # Crear datos para la gráfica de barras de motos
     modelos_motos = [modelo[0] for modelo in modelos_cotizados_motos]
     cotizaciones_motos = [modelo[1] for modelo in modelos_cotizados_motos]
@@ -775,7 +768,6 @@ def graficas():
         db.session.query(
             db.func.MONTH(tbl_coti_motos.fecha_coti).label('mes'),
             db.func.count(tbl_coti_motos.id_coti_moto).label('total_cotizaciones')
-=======
     # Crear datos para la gráfica de autos
     modelos_autos = [modelo[0] for modelo in modelos_cotizados_autos]
     cotizaciones_autos = [modelo[1] for modelo in modelos_cotizados_autos]
@@ -799,14 +791,12 @@ def graficas():
         db.session.query(
             db.func.MONTH(tbl_coti_autos.fecha_coti).label('mes'),
             db.func.count(tbl_coti_autos.id_coti_auto).label('total_cotizaciones')
->>>>>>> 1c42f03457f932355279111d05691d8c47ca1fdf
         )
         .group_by('mes')
         .order_by('mes')
         .all()
     )
 
-<<<<<<< HEAD
     # Crear datos para la gráfica de pastel de motos
     meses_motos = [calendar.month_name[cotizacion.mes] for cotizacion in cotizaciones_por_mes_motos]
 
@@ -825,7 +815,6 @@ def graficas():
     graph_pastel_motos = fig_pastel_motos.to_html(full_html=False, config={'displayModeBar': False})
 
     return render_template('admin/graficas.html', admin=admin, graph_lineas_autos=graph_lineas_autos, graph_autos=graph_autos, graph_pastel_autos=graph_pastel_autos, graph_lineas_motos=graph_lineas_motos, graph_motos=graph_motos, graph_pastel_motos=graph_pastel_motos)
-=======
     # Crear datos para la gráfica de pastel de autos
     meses = [calendar.month_name[cotizacion.mes] for cotizacion in cotizaciones_por_mes]
     total_cotizaciones_por_mes = [cotizacion.total_cotizaciones for cotizacion in cotizaciones_por_mes]
@@ -847,7 +836,6 @@ def graficas():
 
     return render_template('admin/graficas.html', admin=admin, graph_lineas=graph_lineas, graph_autos=graph_autos, graph_motos=graph_motos, graph_pastel_autos=graph_pastel_autos)
 
->>>>>>> 1c42f03457f932355279111d05691d8c47ca1fdf
 
 
 @app.route('/get_cotizaciones', methods=['GET'])
