@@ -744,6 +744,10 @@ def graficas():
     graph_pastel_motos = fig_pastel_motos.to_html(full_html=False, config={'displayModeBar': False})
 
     return render_template('admin/graficas.html', admin=admin, graph_lineas_autos=graph_lineas_autos, graph_autos=graph_autos, graph_pastel_autos=graph_pastel_autos, graph_lineas_motos=graph_lineas_motos, graph_motos=graph_motos, graph_pastel_motos=graph_pastel_motos)
+<<<<<<< HEAD
+=======
+
+>>>>>>> de8954eaadfde43e693defada3182ecc79dd829e
 
 
 @app.route('/get_cotizaciones', methods=['GET'])
@@ -890,4 +894,7 @@ def eliminar_admin(id_admin):
 if __name__ == '__main__':
     app.secret_key = 'jfjfi029832rninf 2infiwenf2j ienfkowenf92h okenfi20'
     app.run("0.0.0.0", 8080, debug=True)
+<<<<<<< HEAD
     
+=======
+>>>>>>> de8954eaadfde43e693defada3182ecc79dd829e
